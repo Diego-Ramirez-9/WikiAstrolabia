@@ -1,0 +1,16 @@
+{
+  "data": [
+    {
+      "slug": "entranas",
+      "nombre": "Las Entrañas del Reloj",
+      "subtitulo": "Zona de inicio",
+      "tipo": "eje",
+      "etiquetas": [
+        "Tutorial",
+        "Maquinaria antigua",
+        "Asombro silencioso"
+      ],
+      "imagenUrl": null
+    }
+  ]
+}

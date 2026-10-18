@@ -1,0 +1,23 @@
+{
+  "data": {
+    "slug": "esclusas",
+    "nombre": "Las Esclusas",
+    "descripcion": "Tramo de ritmo: corrientes que se activan y detienen en ciclos.",
+    "aprendizaje": null,
+    "esZonaSegura": false,
+    "imagenUrl": null,
+    "zona": {
+      "slug": "acuario",
+      "nombre": "Casa de Acuario"
+    },
+    "observatorio": null,
+    "archivos": [
+      {
+        "slug": "poema-marea",
+        "titulo": "Marea",
+        "categoria": "poemas"
+      }
+    ],
+    "dialogos": []
+  }
+}

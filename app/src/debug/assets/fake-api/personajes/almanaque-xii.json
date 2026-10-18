@@ -1,0 +1,68 @@
+{
+  "data": {
+    "slug": "almanaque-xii",
+    "nombre": "Almanaque XII",
+    "titulo": "El duodécimo Almanaque",
+    "rol": "protagonista",
+    "estado": "activo",
+    "resumen": "Un autómata pequeño, curioso y silencioso, creado para reparar el Reloj y obedecer a Efeméride. Es el protagonista y el personaje que controla el jugador.",
+    "origen": "Es el duodécimo de su linaje. Despierta en la Sala de los Nichos, en la base del Reloj, sin recuerdos y sin saber nada de los once Almanaques anteriores. Todo lo que conoce del mundo es lo que Efeméride le cuenta: que las constelaciones escaparon, que el mundo cayó en el desorden y que él es el último recurso para repararlo.",
+    "motivacion": "Recolectar los fragmentos de estrella dispersos en cada Casa y devolver las constelaciones a su órbita, porque cree que así salvará al mundo. Es una motivación de deber, no de deseo propio.",
+    "personalidad": "No habla. Se expresa con animaciones breves.",
+    "arco": "A lo largo del juego, su motivación se pone en duda. Lo que empieza como una orden termina como una decisión: ¿reparar o no? El arco del personaje es el paso de obedecer a elegir.",
+    "imagenUrl": null,
+    "rasgos": {
+      "apariencia": [
+        {
+          "nombre": "Cuerpo",
+          "descripcion": "Pequeño y redondeado, de latón envejecido con remaches visibles."
+        },
+        {
+          "nombre": "Cabeza",
+          "descripcion": "Sus ojos son dos puntos de luz cálida que parpadean como un tic-tac."
+        },
+        {
+          "nombre": "Capa",
+          "descripcion": "Larga y oscura, cubierta de mapas estelares bordados en hilo dorado. Ondea al saltar y al balancearse, y es su elemento más reconocible."
+        },
+        {
+          "nombre": "Número XII",
+          "descripcion": "Grabado en la espalda, visible al escalar."
+        },
+        {
+          "nombre": "Llave de cuerda",
+          "descripcion": "Una pequeña llave en un costado de su rostro. Gira cuando está sin moverse o al guardar en un observatorio."
+        },
+        {
+          "nombre": "Manos",
+          "descripcion": "Dedos de engranaje fino que le permiten aferrarse a superficies rugosas."
+        }
+      ],
+      "expresion": [
+        {
+          "nombre": "Ante un holograma",
+          "descripcion": "Inclina la cabeza."
+        },
+        {
+          "nombre": "Ante un poema",
+          "descripcion": "Se detiene frente a él."
+        },
+        {
+          "nombre": "Antes de un salto largo",
+          "descripcion": "Mira hacia abajo."
+        },
+        {
+          "nombre": "Al descansar",
+          "descripcion": "Da cuerda a su llave en un observatorio."
+        }
+      ],
+      "herramienta": [
+        {
+          "nombre": "El Astrolabio",
+          "descripcion": "Su herramienta, que da nombre al juego. La lleva en el antebrazo: un disco de latón con anillos concéntricos que giran. Con él mide las estrellas, fija estrellas temporales en el vacío y lanza un hilo de luz hacia ellas. Dos de sus anillos se encienden para indicar los usos disponibles del gancho."
+        }
+      ]
+    },
+    "dialogos": []
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "data": {
+    "slug": "poema-vapor",
+    "titulo": "Vapor",
+    "categoria": "poemas",
+    "contenido": "No sé quién lee esto. Lo escribo en papel mojado y se lo dejo al río, que sube al cielo como vapor. Si llega hasta ti, que sepas que aquí abajo alguien fue feliz.",
+    "autor": "Anónimo (desde la Tierra)",
+    "ubicacion": "Último tramo antes de la Cámara del Portador",
+    "imagenUrl": null,
+    "zona": {
+      "slug": "acuario",
+      "nombre": "Casa de Acuario"
+    },
+    "sala": null
+  }
+}

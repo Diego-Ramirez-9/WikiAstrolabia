@@ -1,0 +1,58 @@
+{
+  "data": {
+    "slug": "entranas",
+    "nombre": "Las Entrañas del Reloj",
+    "subtitulo": "Zona de inicio",
+    "tipo": "eje",
+    "constelacion": null,
+    "etiquetas": [
+      "Tutorial",
+      "Maquinaria antigua",
+      "Asombro silencioso"
+    ],
+    "resumen": "La base de la torre y el tutorial del juego: un lugar oscuro y antiguo donde el jugador aprende las cuatro habilidades sin peligros letales. Aquí la historia oficial de Efeméride se cuenta sin fisuras.",
+    "exterior": "Desde el Pozo Celeste se ven las Casas de arriba: Géminis como dos torres gemelas unidas por puentes, y Acuario como una estructura de la que caen cascadas de luz. El jugador sabe hacia dónde va antes de llegar.",
+    "ambientacion": "Es la maquinaria más vieja del Reloj. Engranajes del tamaño de edificios giran con pesadez, cubiertos de polvo y óxido. Cadenas gruesas cuelgan desde una altura que no se alcanza a ver. La única luz viene de destellos de latón y de estrellas lejanas que se cuelan por grietas en el casco. En los engranajes más antiguos, si se observa con atención, hay formas que casi parecen humanas: un brazo, un perfil, una mano abierta. Son los creadores del Reloj, convertidos en parte de su máquina.",
+    "narrativa": "Efeméride aparece por primera vez como un holograma cálido y sereno. Los primeros hologramas del mundo muestran el \"desorden\": ciudades en penumbra, multitudes dispersas, campos abandonados. En un hueco de la Galería de Engranajes, alcanzable solo escalando, hay un poema oculto: el primer adelanto de que algo sube desde la Tierra.",
+    "restauracion": null,
+    "imagenUrl": null,
+    "salas": [
+      {
+        "slug": "sala-de-los-nichos",
+        "nombre": "La Sala de los Nichos",
+        "orden": 1,
+        "esZonaSegura": false,
+        "esObservatorio": false
+      },
+      {
+        "slug": "galeria-de-engranajes",
+        "nombre": "La Galería de Engranajes",
+        "orden": 2,
+        "esZonaSegura": false,
+        "esObservatorio": false
+      },
+      {
+        "slug": "puente-roto",
+        "nombre": "El Puente Roto",
+        "orden": 3,
+        "esZonaSegura": false,
+        "esObservatorio": false
+      },
+      {
+        "slug": "pozo-de-cadenas",
+        "nombre": "El Pozo de Cadenas",
+        "orden": 4,
+        "esZonaSegura": false,
+        "esObservatorio": false
+      },
+      {
+        "slug": "pozo-celeste",
+        "nombre": "El Pozo Celeste",
+        "orden": 5,
+        "esZonaSegura": false,
+        "esObservatorio": false
+      }
+    ],
+    "mecanicas": []
+  }
+}

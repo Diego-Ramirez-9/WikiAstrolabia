@@ -1,0 +1,17 @@
+{
+  "data": {
+    "slug": "torre-invertida",
+    "nombre": "La Torre Invertida",
+    "descripcion": "Tramo final donde los reflejos ya no coinciden con el original.",
+    "aprendizaje": null,
+    "esZonaSegura": false,
+    "imagenUrl": null,
+    "zona": {
+      "slug": "geminis",
+      "nombre": "Casa de Géminis"
+    },
+    "observatorio": null,
+    "archivos": [],
+    "dialogos": []
+  }
+}

@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.WikiAstrolabia" parent="android:Theme.Material.Light.NoActionBar" />
+    <!-- Tema de la ventana. El diseño de las pantallas vive en ui/theme (Compose). -->
+    <style name="Theme.WikiAstrolabio" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/fondo_app</item>
+    </style>
+
+    <!--
+        Splash del sistema (androidx.core:core-splashscreen). Se mantiene visible mientras
+        MainViewModel consulta /contenido/version. PROVISIONAL: UI/UX define el ícono final
+        (windowSplashScreenAnimatedIcon) y el fondo.
+    -->
+    <style name="Theme.WikiAstrolabio.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/fondo_app</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.WikiAstrolabio</item>
+    </style>
 </resources>

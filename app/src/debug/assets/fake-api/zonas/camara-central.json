@@ -1,0 +1,39 @@
+{
+  "data": {
+    "slug": "camara-central",
+    "nombre": "La Cámara Central",
+    "subtitulo": "El corazón del Gran Reloj Cósmico",
+    "tipo": "cierre",
+    "constelacion": {
+      "nombre": "Ofiuco",
+      "sobrenombre": "El Portador de la Serpiente"
+    },
+    "etiquetas": [
+      "Desenlace",
+      "Corazón del Reloj"
+    ],
+    "resumen": "El corazón del Gran Reloj Cósmico y el escenario del desenlace. No es un nivel de plataformas, sino una sala final breve.",
+    "exterior": null,
+    "ambientacion": "Una cámara inmensa y circular donde convergen todos los engranajes de la torre. En el centro hay una prisión de hierro cósmico abierta y vacía: el lugar donde estuvo encerrada Ofiuco. Sobre ella, el telescopio gigante apunta hacia la Tierra. Hay silencio casi total, roto solo por el latido del mecanismo central. La música de todas las zonas anteriores se funde en un solo tema.",
+    "narrativa": "El Almanaque XII llega con Ofiuco entre sus manos. Efeméride le pide que la devuelva a su prisión. La lente del telescopio muestra el mundo completo, con lo bueno y lo doloroso de su libertad. Aquí ocurre el desenlace que el equipo decida.",
+    "restauracion": null,
+    "imagenUrl": null,
+    "salas": [
+      {
+        "slug": "sala-observatorio-de-ofiuco",
+        "nombre": "El Observatorio de Ofiuco",
+        "orden": 1,
+        "esZonaSegura": true,
+        "esObservatorio": true
+      },
+      {
+        "slug": "sala-camara-central",
+        "nombre": "La Cámara Central",
+        "orden": 2,
+        "esZonaSegura": false,
+        "esObservatorio": false
+      }
+    ],
+    "mecanicas": []
+  }
+}

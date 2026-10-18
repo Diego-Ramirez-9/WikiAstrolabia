@@ -1,0 +1,12 @@
+{
+  "data": {
+    "slug": "las-casas",
+    "titulo": "Las Casas",
+    "contenido": "Doce estructuras suspendidas alrededor del Eje, en espiral ascendente como las horas de una carátula, cada una a la altura de una hora. Solo Géminis y Acuario son jugables; las demás se ven en el fondo, funcionando en silencio.",
+    "imagenUrl": null,
+    "seccion": {
+      "slug": "estructura",
+      "titulo": "Estructura del Gran Reloj"
+    }
+  }
+}

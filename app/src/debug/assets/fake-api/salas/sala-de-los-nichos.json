@@ -1,0 +1,60 @@
+{
+  "data": {
+    "slug": "sala-de-los-nichos",
+    "nombre": "La Sala de los Nichos",
+    "descripcion": "El Almanaque despierta en un nicho tallado en la pared. Hay doce nichos numerados del I al XII; los otros once están vacíos.",
+    "aprendizaje": "Moverse y saltar.",
+    "esZonaSegura": false,
+    "imagenUrl": null,
+    "zona": {
+      "slug": "entranas",
+      "nombre": "Las Entrañas del Reloj"
+    },
+    "observatorio": null,
+    "archivos": [],
+    "dialogos": [
+      {
+        "slug": "inicio-sala-de-los-nichos",
+        "titulo": "Diálogo de inicio: la Sala de los Nichos",
+        "lineas": [
+          {
+            "orden": 1,
+            "texto": "Almanaque. Despierta."
+          },
+          {
+            "orden": 2,
+            "texto": "Bienvenido. El Reloj te estaba esperando."
+          },
+          {
+            "orden": 3,
+            "texto": "Soy Efeméride, la voz del Gran Reloj Cósmico."
+          },
+          {
+            "orden": 4,
+            "texto": "Durante eones, cada estrella giró en su lugar…"
+          },
+          {
+            "orden": 5,
+            "texto": "…y cada vida siguió el camino que le fue escrito."
+          },
+          {
+            "orden": 6,
+            "texto": "Pero algo se rompió en el corazón del Reloj."
+          },
+          {
+            "orden": 7,
+            "texto": "Dos constelaciones escaparon de su órbita."
+          },
+          {
+            "orden": 8,
+            "texto": "Allá abajo, el mundo ha olvidado su camino."
+          },
+          {
+            "orden": 9,
+            "texto": "Tú se lo devolverás. Sube. Yo te guiaré."
+          }
+        ]
+      }
+    ]
+  }
+}

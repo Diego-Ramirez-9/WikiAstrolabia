@@ -1,3 +1,102 @@
 <resources>
-    <string name="app_name">WikiAstrolabia</string>
+    <string name="app_name">WikiAstrolabio</string>
+
+    <!-- Generales -->
+    <string name="accion_reintentar">Reintentar</string>
+    <string name="accion_atras">Regresar</string>
+    <string name="aviso_sin_conexion">Sin conexión: mostrando el contenido guardado.</string>
+    <string name="error_sin_conexion">No hay conexión y todavía no hay contenido guardado. Revisa tu internet e intenta de nuevo.</string>
+    <string name="error_no_encontrado">Este contenido ya no existe.</string>
+    <string name="error_servidor">El servidor tuvo un problema. Intenta más tarde.</string>
+    <string name="error_datos_invalidos">No se pudo leer la información recibida. Intenta más tarde o actualiza la app.</string>
+    <string name="error_desconocido">Ocurrió un error inesperado.</string>
+
+    <!-- Barra de navegación inferior -->
+    <string name="nav_inicio">Inicio</string>
+    <string name="nav_mundo">Mundo</string>
+    <string name="nav_archivos">Archivos</string>
+
+    <!-- Inicio -->
+    <string name="inicio_titulo">Astrolabio</string>
+    <string name="inicio_registro">Registro del Gran Reloj Cósmico</string>
+    <string name="inicio_lema">Cada secreto, a su tiempo.</string>
+    <string name="inicio_subtitulo">Tu guía al universo de Astrolabio.</string>
+    <string name="inicio_explora">Explora el códex</string>
+    <string name="codex_historia">Historia</string>
+    <string name="codex_historia_desc">Descubre el origen del Gran Reloj.</string>
+    <string name="codex_mundo">Mundo</string>
+    <string name="codex_mundo_desc">Explora las Casas y observatorios.</string>
+    <string name="codex_personajes">Personajes</string>
+    <string name="codex_personajes_desc">Conoce a quienes forman parte de esta historia.</string>
+    <string name="codex_mecanicas">Mecánicas</string>
+    <string name="codex_mecanicas_desc">Aprende las habilidades de Almanaque XII.</string>
+    <string name="codex_archivos">Archivos</string>
+    <string name="codex_archivos_desc">Consulta fragmentos, poemas y notas.</string>
+
+    <!-- Historia -->
+    <string name="historia_titulo">Historia</string>
+
+    <!-- Mundo -->
+    <string name="mundo_mapa">Mapa del cosmos</string>
+    <string name="mundo_toca_marcador">Toca un marcador para explorar.</string>
+    <string name="mundo_explorar">Explorar</string>
+
+    <!-- Zonas y salas -->
+    <string name="zona_titulo">Zonas</string>
+    <string name="zona_constelacion">Constelación: %1$s</string>
+    <string name="zona_resumen">Resumen</string>
+    <string name="zona_exterior">Exterior</string>
+    <string name="zona_ambientacion">Ambientación</string>
+    <string name="zona_narrativa">Narrativa</string>
+    <string name="zona_restauracion">Restauración</string>
+    <string name="zona_habitaciones">Habitaciones · %1$d</string>
+    <string name="zona_mecanicas">Mecánicas de la zona</string>
+    <string name="sala_zona_segura">Zona segura</string>
+    <string name="sala_observatorio">Observatorio</string>
+    <string name="sala_descripcion">Descripción</string>
+    <string name="sala_aprendizaje">Se aprende</string>
+    <string name="sala_exterior">Exterior</string>
+    <string name="sala_interior">Interior</string>
+    <string name="sala_luz">Luz</string>
+    <string name="sala_descubrimientos">Descubrimientos</string>
+    <string name="sala_archivos">Archivos en esta sala</string>
+
+    <!-- Personajes -->
+    <string name="personajes_titulo">Personajes</string>
+    <string name="personajes_subtitulo">Quienes habitan entre los engranajes.</string>
+    <string name="personaje_origen">Origen</string>
+    <string name="personaje_motivacion">Motivación</string>
+    <string name="personaje_personalidad">Personalidad</string>
+    <string name="personaje_arco">Arco</string>
+    <string name="personaje_dialogos">Diálogos</string>
+    <string name="rol_protagonista">Protagonista</string>
+    <string name="rol_guia">Guía</string>
+    <string name="rol_secundario">Secundario</string>
+    <string name="rol_colectivo">Colectivo</string>
+    <string name="estado_activo">Activo</string>
+    <string name="estado_desactivado">Desactivado</string>
+    <string name="estado_desaparecido">Desaparecido</string>
+    <string name="rasgos_apariencia">Apariencia</string>
+    <string name="rasgos_expresion">Expresión</string>
+    <string name="rasgos_herramienta">Herramienta</string>
+    <string name="rasgos_comunicacion">Comunicación</string>
+    <string name="rasgos_presencia">Presencia</string>
+
+    <!-- Mecánicas -->
+    <string name="mecanicas_titulo">Mecánicas</string>
+    <string name="mecanicas_subtitulo">Manual de campo de Almanaque XII.</string>
+    <string name="mecanicas_acciones">Acciones</string>
+    <string name="mecanicas_reglas">Reglas</string>
+    <string name="habilidad_origen">Origen en el mundo</string>
+    <string name="habilidad_senal">Señal para el jugador</string>
+
+    <!-- Archivos -->
+    <string name="archivos_titulo">Archivos</string>
+    <string name="archivos_subtitulo">Vestigios de un tiempo que permanece.</string>
+    <string name="archivos_vacio">Aún no hay registros en esta colección.</string>
+    <string name="archivo_autor">— %1$s</string>
+    <string name="archivo_ubicacion">Dónde encontrarlo</string>
+    <string name="archivo_ver_sala">Ver sala: %1$s</string>
+    <string name="accion_expandir">Mostrar %1$s</string>
+    <string name="accion_contraer">Ocultar %1$s</string>
 </resources>

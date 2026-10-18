@@ -1,0 +1,19 @@
+{
+  "data": {
+    "slug": "nota-xi-no-las-repares",
+    "titulo": "Última nota de XI",
+    "categoria": "notas-de-xi",
+    "contenido": "No las repares.",
+    "autor": "Almanaque XI",
+    "ubicacion": "Observatorio de Ofiuco",
+    "imagenUrl": null,
+    "zona": {
+      "slug": "camara-central",
+      "nombre": "La Cámara Central"
+    },
+    "sala": {
+      "slug": "sala-observatorio-de-ofiuco",
+      "nombre": "El Observatorio de Ofiuco"
+    }
+  }
+}

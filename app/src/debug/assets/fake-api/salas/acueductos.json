@@ -1,0 +1,23 @@
+{
+  "data": {
+    "slug": "acueductos",
+    "nombre": "Los Acueductos",
+    "descripcion": "Canales elevados con muros mojados y caídas largas.",
+    "aprendizaje": null,
+    "esZonaSegura": false,
+    "imagenUrl": null,
+    "zona": {
+      "slug": "acuario",
+      "nombre": "Casa de Acuario"
+    },
+    "observatorio": null,
+    "archivos": [
+      {
+        "slug": "poema-cantaro",
+        "titulo": "Cántaro",
+        "categoria": "poemas"
+      }
+    ],
+    "dialogos": []
+  }
+}

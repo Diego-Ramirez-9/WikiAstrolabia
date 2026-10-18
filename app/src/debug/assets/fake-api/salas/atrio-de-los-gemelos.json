@@ -1,0 +1,17 @@
+{
+  "data": {
+    "slug": "atrio-de-los-gemelos",
+    "nombre": "El Atrio de los Gemelos",
+    "descripcion": "Sala de entrada simétrica. Presenta el anclaje reflejado en un espacio seguro.",
+    "aprendizaje": null,
+    "esZonaSegura": false,
+    "imagenUrl": null,
+    "zona": {
+      "slug": "geminis",
+      "nombre": "Casa de Géminis"
+    },
+    "observatorio": null,
+    "archivos": [],
+    "dialogos": []
+  }
+}
