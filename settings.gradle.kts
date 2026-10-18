@@ -22,5 +22,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "WikiAstrolabia"
+rootProject.name = "WikiAstrolabio"
 include(":app")

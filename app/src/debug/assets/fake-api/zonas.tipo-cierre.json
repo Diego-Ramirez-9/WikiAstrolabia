@@ -1,0 +1,15 @@
+{
+  "data": [
+    {
+      "slug": "camara-central",
+      "nombre": "La Cámara Central",
+      "subtitulo": "El corazón del Gran Reloj Cósmico",
+      "tipo": "cierre",
+      "etiquetas": [
+        "Desenlace",
+        "Corazón del Reloj"
+      ],
+      "imagenUrl": null
+    }
+  ]
+}

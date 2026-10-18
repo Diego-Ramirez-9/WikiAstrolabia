@@ -1,0 +1,23 @@
+{
+  "data": {
+    "slug": "puentes-paralelos",
+    "nombre": "Los Puentes Paralelos",
+    "descripcion": "Recorrido exterior entre las dos torres, con caídas largas y engranajes en movimiento.",
+    "aprendizaje": null,
+    "esZonaSegura": false,
+    "imagenUrl": null,
+    "zona": {
+      "slug": "geminis",
+      "nombre": "Casa de Géminis"
+    },
+    "observatorio": null,
+    "archivos": [
+      {
+        "slug": "poema-gemelas",
+        "titulo": "Gemelas",
+        "categoria": "poemas"
+      }
+    ],
+    "dialogos": []
+  }
+}

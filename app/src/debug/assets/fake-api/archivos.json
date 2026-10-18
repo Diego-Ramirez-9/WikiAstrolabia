@@ -1,0 +1,56 @@
+{
+  "data": [
+    {
+      "slug": "poemas",
+      "nombre": "Poemas",
+      "descripcion": "Ecos que suben desde la Tierra hasta la torre. Cada Casa atrae los que se parecen a ella: en Géminis, poemas sobre dobles y caminos que pudieron ser; en Acuario, sobre corrientes, cambio y lo que se hace entre muchos.",
+      "iconoUrl": null,
+      "elementos": [
+        {
+          "slug": "poema-gemelas",
+          "titulo": "Gemelas",
+          "ubicacion": "Los Puentes Paralelos",
+          "imagenUrl": null
+        },
+        {
+          "slug": "poema-cantaro",
+          "titulo": "Cántaro",
+          "ubicacion": "Los Acueductos",
+          "imagenUrl": null
+        },
+        {
+          "slug": "poema-marea",
+          "titulo": "Marea",
+          "ubicacion": "Las Esclusas",
+          "imagenUrl": null
+        },
+        {
+          "slug": "poema-vapor",
+          "titulo": "Vapor",
+          "ubicacion": "Último tramo antes de la Cámara del Portador",
+          "imagenUrl": null
+        }
+      ]
+    },
+    {
+      "slug": "notas-de-xi",
+      "nombre": "Notas de XI",
+      "descripcion": "Lo que el Almanaque XI dejó en los observatorios mayores: su descubrimiento, la verdad y su despedida.",
+      "iconoUrl": null,
+      "elementos": [
+        {
+          "slug": "nota-xi-subo-a-terminar",
+          "titulo": "Última nota del Cauce",
+          "ubicacion": "Observatorio del Cauce",
+          "imagenUrl": null
+        },
+        {
+          "slug": "nota-xi-no-las-repares",
+          "titulo": "Última nota de XI",
+          "ubicacion": "Observatorio de Ofiuco",
+          "imagenUrl": null
+        }
+      ]
+    }
+  ]
+}

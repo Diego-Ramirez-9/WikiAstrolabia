@@ -13,3 +13,10 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Caché del compilador de Kotlin 2.x
+.kotlin/
+# Caché de Python del generador de respuestas falsas
+__pycache__/
+# Contexto local para Claude Code (no se comparte)
+CLAUDE.md

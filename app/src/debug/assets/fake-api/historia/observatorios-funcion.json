@@ -1,0 +1,12 @@
+{
+  "data": {
+    "slug": "observatorios-funcion",
+    "titulo": "Función de los observatorios",
+    "contenido": "Puntos fijos de descanso repartidos por la torre y los únicos lugares tranquilos del Reloj: Efeméride nunca habla dentro de ellos, solo al salir. Al descansar, el Almanaque se sienta, da cuerda a su llave y se guarda el progreso. Si el jugador sale del juego, continúa desde el último observatorio. Al morir, reaparece al inicio de la sala, no en el observatorio.",
+    "imagenUrl": null,
+    "seccion": {
+      "slug": "observatorios",
+      "titulo": "Los observatorios"
+    }
+  }
+}

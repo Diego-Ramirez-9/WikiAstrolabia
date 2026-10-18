@@ -1,0 +1,28 @@
+{
+  "data": {
+    "slug": "almanaque-xi",
+    "nombre": "Almanaque XI",
+    "titulo": "El undécimo Almanaque",
+    "rol": "secundario",
+    "estado": "desactivado",
+    "resumen": "El Almanaque anterior. Descubrió la luz de Ofiuco, liberó a la constelación y fue desactivado por Efeméride por considerarlo una falla. Sus notas guían en secreto al Almanaque XII.",
+    "origen": "Vio la luz de Ofiuco filtrarse hacia el mundo por un telescopio que apuntaba a la Tierra. Desde entonces observó en secreto y entendió que las grietas eran lo único vivo del Reloj. Finalmente descendió a su corazón y liberó a Ofiuco.",
+    "motivacion": "Devolver a la humanidad la posibilidad de elegir. Su última nota lo resume: \"No las repares.\"",
+    "personalidad": "Curioso al principio y decidido al final. Juntó durante años cartas astrales tachadas, notas y poemas que subían desde la Tierra.",
+    "arco": "De mantenedor del Reloj a quien lo rompió. Deja un rastro de notas para que el siguiente Almanaque lo siga.",
+    "imagenUrl": null,
+    "rasgos": {
+      "presencia": [
+        {
+          "nombre": "Notas",
+          "descripcion": "Deja notas en los observatorios mayores: en Géminis cuentan su descubrimiento; en Acuario revelan la verdad; en Ofiuco, su despedida."
+        },
+        {
+          "nombre": "Estado final",
+          "descripcion": "Inerte frente al telescopio del Observatorio de Ofiuco, con la cabeza ligeramente inclinada, como si siguiera mirando. Su llave de cuerda está detenida y sostiene su carta de despedida a la humanidad."
+        }
+      ]
+    },
+    "dialogos": []
+  }
+}

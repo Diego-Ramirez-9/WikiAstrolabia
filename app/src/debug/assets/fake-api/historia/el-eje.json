@@ -1,0 +1,12 @@
+{
+  "data": {
+    "slug": "el-eje",
+    "titulo": "El Eje",
+    "contenido": "Una columna de maquinaria que atraviesa el Reloj de abajo hacia arriba. Su base son las Entrañas; su cima, la Cámara Central.",
+    "imagenUrl": null,
+    "seccion": {
+      "slug": "estructura",
+      "titulo": "Estructura del Gran Reloj"
+    }
+  }
+}

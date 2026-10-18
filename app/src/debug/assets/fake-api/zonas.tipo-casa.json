@@ -1,0 +1,28 @@
+{
+  "data": [
+    {
+      "slug": "geminis",
+      "nombre": "Casa de Géminis",
+      "subtitulo": "La Casa de los Reflejos",
+      "tipo": "casa",
+      "etiquetas": [
+        "Dualidad y reflejos",
+        "Muros gemelos",
+        "Simetría rota"
+      ],
+      "imagenUrl": null
+    },
+    {
+      "slug": "acuario",
+      "nombre": "Casa de Acuario",
+      "subtitulo": "La Casa de las Corrientes",
+      "tipo": "casa",
+      "etiquetas": [
+        "Cambio y lo colectivo",
+        "Corrientes",
+        "Luz líquida"
+      ],
+      "imagenUrl": null
+    }
+  ]
+}

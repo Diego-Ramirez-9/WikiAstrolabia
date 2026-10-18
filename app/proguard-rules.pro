@@ -1,21 +1,13 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
+# Reglas de R8 para el build release (isMinifyEnabled = true).
 #
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# Retrofit 3, OkHttp 5, kotlinx.serialization, Room, Hilt y Coil ya traen sus propias reglas
+# dentro de sus librerías, así que aquí solo va lo específico de este proyecto.
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# Conserva números de línea en los reportes de errores, sin exponer el nombre del archivo.
+-keepattributes SourceFile,LineNumberTable
+-renamesourcefileattribute SourceFile
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
-
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# Retrofit lee los tipos genéricos de AstrolabioApi (ej. RespuestaApi<List<PersonajeDto>>)
+# por reflexión; R8 en modo completo puede borrar esa información si no se conserva.
+-keep,allowobfuscation,allowshrinking interface com.equipo.wikiastrolabio.data.remote.AstrolabioApi
+-keep,allowobfuscation,allowshrinking class com.equipo.wikiastrolabio.data.remote.dto.RespuestaApi

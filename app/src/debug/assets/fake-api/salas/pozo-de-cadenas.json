@@ -1,0 +1,17 @@
+{
+  "data": {
+    "slug": "pozo-de-cadenas",
+    "nombre": "El Pozo de Cadenas",
+    "descripcion": "Un tiro vertical con paredes rugosas y cadenas colgantes.",
+    "aprendizaje": "Escalar, anclar desde la pared y lanzarse; recargar al tocar suelo.",
+    "esZonaSegura": false,
+    "imagenUrl": null,
+    "zona": {
+      "slug": "entranas",
+      "nombre": "Las Entrañas del Reloj"
+    },
+    "observatorio": null,
+    "archivos": [],
+    "dialogos": []
+  }
+}

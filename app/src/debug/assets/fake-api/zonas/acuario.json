@@ -1,0 +1,89 @@
+{
+  "data": {
+    "slug": "acuario",
+    "nombre": "Casa de Acuario",
+    "subtitulo": "La Casa de las Corrientes",
+    "tipo": "casa",
+    "constelacion": {
+      "nombre": "Acuario",
+      "sobrenombre": "El Portador de Agua"
+    },
+    "etiquetas": [
+      "Cambio y lo colectivo",
+      "Corrientes",
+      "Luz líquida"
+    ],
+    "resumen": "Una Casa inundada de luz estelar líquida que se derrama sin control: con la constelación del Portador de Agua fuera de su órbita, todo lo que contenía fluye libre. Es el segundo nivel y el lugar donde el mundo de abajo se siente más cerca.",
+    "exterior": "Un ánfora gigante suspendida del Eje, inclinada y agrietada. De sus grietas y de su boca caen cascadas de luz turquesa que bajan en espiral por acueductos rotos y se pierden en el abismo. Desde lejos parece una vasija que alguien dejó caer y que nunca terminó de vaciarse.",
+    "ambientacion": "La luz líquida fluye por canales, cae desde ánforas rotas y forma corrientes en el aire. Los engranajes giran sumergidos, empujados por fuerzas que nadie dirige. En la corriente flotan fragmentos de voces humanas: murmullos, risas, versos incompletos. Cuanto más se asciende, más intensa es la luz y más claras son las voces.",
+    "narrativa": "Acuario es la casa del cambio y de lo colectivo. Los hologramas ya no se pueden disfrazar: muestran multitudes que eligen juntas, se equivocan, discuten y vuelven a intentarlo. Hay dolor y pérdida, pero también algo que antes no existía. Los poemas son más abundantes, como si la corriente los hubiera arrastrado hasta la torre.",
+    "restauracion": "Al restaurar la Casa, las corrientes se detienen, la luz líquida se congela y las voces se apagan una por una. El holograma final muestra a una multitud separándose en líneas rectas, cada persona de regreso a su camino.",
+    "imagenUrl": null,
+    "salas": [
+      {
+        "slug": "fuentes-rotas",
+        "nombre": "Las Fuentes Rotas",
+        "orden": 1,
+        "esZonaSegura": false,
+        "esObservatorio": false
+      },
+      {
+        "slug": "acueductos",
+        "nombre": "Los Acueductos",
+        "orden": 2,
+        "esZonaSegura": false,
+        "esObservatorio": false
+      },
+      {
+        "slug": "esclusas",
+        "nombre": "Las Esclusas",
+        "orden": 3,
+        "esZonaSegura": false,
+        "esObservatorio": false
+      },
+      {
+        "slug": "el-remolino",
+        "nombre": "El Remolino",
+        "orden": 4,
+        "esZonaSegura": false,
+        "esObservatorio": false
+      },
+      {
+        "slug": "sala-observatorio-del-cauce",
+        "nombre": "El Observatorio del Cauce",
+        "orden": 5,
+        "esZonaSegura": true,
+        "esObservatorio": true
+      },
+      {
+        "slug": "camara-del-portador",
+        "nombre": "La Cámara del Portador",
+        "orden": 6,
+        "esZonaSegura": false,
+        "esObservatorio": false
+      }
+    ],
+    "mecanicas": [
+      {
+        "slug": "corrientes",
+        "nombre": "Corrientes",
+        "descripcion": "El aire fluye como agua en direcciones marcadas visualmente. Empuja al jugador, acelera o frena su balanceo y altera su inercia al soltarse del gancho."
+      },
+      {
+        "slug": "anclajes-a-la-deriva",
+        "nombre": "Anclajes a la deriva",
+        "descripcion": "Un anclaje colocado dentro de una corriente se desplaza lentamente con ella. El jugador debe calcular dónde estará el anclaje cuando llegue a él."
+      },
+      {
+        "slug": "muros-mojados",
+        "nombre": "Muros mojados",
+        "descripcion": "Las paredes bañadas por luz líquida agotan la cuerda de escalada el doble de rápido. Las secas funcionan con normalidad."
+      },
+      {
+        "slug": "mecanica-esclusas",
+        "nombre": "Esclusas",
+        "descripcion": "Compuertas que abren y cierran el paso de las corrientes en ciclos regulares. El jugador aprende a moverse con el ritmo del lugar."
+      }
+    ]
+  }
+}
