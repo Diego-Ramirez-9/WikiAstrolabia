@@ -1,6 +1,13 @@
 {
   "data": [
     {
+      "slug": "fragmentos-de-estrella",
+      "nombre": "Fragmentos de Estrella",
+      "descripcion": "Espacio preparado para los registros oficiales de esta colección.",
+      "iconoUrl": null,
+      "elementos": []
+    },
+    {
       "slug": "poemas",
       "nombre": "Poemas",
       "descripcion": "Ecos que suben desde la Tierra hasta la torre. Cada Casa atrae los que se parecen a ella: en Géminis, poemas sobre dobles y caminos que pudieron ser; en Acuario, sobre corrientes, cambio y lo que se hace entre muchos.",
