@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- PROVISIONAL (Material Icons, Apache 2.0). UI/UX lo reemplaza por su ícono pixel art. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
     android:height="24dp"
     android:autoMirrored="true"
     android:viewportWidth="24"
     android:viewportHeight="24">
+    <!-- Flecha izquierda pixel art en color terracota/ámbar -->
     <path
-        android:fillColor="@android:color/white"
-        android:pathData="M20,11H7.83l5.59,-5.59L12,4l-8,8 8,8 1.41,-1.41L7.83,13H20v-2z" />
+        android:fillColor="#FFFFAA5E"
+        android:pathData="M10,6h2v2h-2zM8,8h2v2H8zM6,10h2v2H6zM4,12h2v2H4zM6,14h2v2H6zM8,16h2v2H8zM10,18h2v2h-2zM12,11h8v4h-8z" />
 </vector>

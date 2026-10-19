@@ -159,6 +159,13 @@ object DatosPreview {
 
     val categoriasArchivo = listOf(
         CategoriaArchivo(
+            slug = "fragmentos-de-estrella",
+            nombre = "Fragmentos de Estrella",
+            descripcion = "Espacio preparado para los registros oficiales de esta colección.",
+            iconoUrl = null,
+            elementos = emptyList(),
+        ),
+        CategoriaArchivo(
             slug = "poemas",
             nombre = "Poemas",
             descripcion = "Ecos que suben desde la Tierra hasta la torre.",
