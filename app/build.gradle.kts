@@ -18,9 +18,8 @@ val propiedadesLocales = Properties().apply {
 fun String.conDiagonalFinal() = trimEnd('/') + "/"
 
 val urlApiProduccion = providers.gradleProperty("astrolabio.apiUrl").get().conDiagonalFinal()
+// Opcional: otra URL para debug (ej. un despliegue de prueba en Vercel), en local.properties.
 val urlApiDebug = (propiedadesLocales.getProperty("API_BASE_URL") ?: urlApiProduccion).conDiagonalFinal()
-// Mientras no exista la API, debug usa las respuestas falsas de src/debug/assets/fake-api.
-val usarApiFalsa = propiedadesLocales.getProperty("USE_FAKE_API")?.toBoolean() ?: true
 
 android {
     namespace = "com.equipo.wikiastrolabio"
@@ -42,7 +41,6 @@ android {
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-debug"
             buildConfigField("String", "API_BASE_URL", "\"$urlApiDebug\"")
-            buildConfigField("boolean", "USE_FAKE_API", "$usarApiFalsa")
         }
         release {
             isMinifyEnabled = true
@@ -52,7 +50,6 @@ android {
                 "proguard-rules.pro"
             )
             buildConfigField("String", "API_BASE_URL", "\"$urlApiProduccion\"")
-            buildConfigField("boolean", "USE_FAKE_API", "false")
         }
     }
     compileOptions {

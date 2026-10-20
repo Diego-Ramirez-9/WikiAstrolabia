@@ -8,13 +8,17 @@ data class ReferenciaDto(
     val nombre: String,
 )
 
-/** En /salas/:slug solo trae slug y líneas; en /personajes/:slug trae también título, tipo y momento. */
+/** Diálogo de /personajes/:slug y /salas/:slug: quién habla, dónde ocurre y sus líneas. */
 @Serializable
 data class DialogoDto(
     val slug: String,
     val titulo: String? = null,
+    /** "escena", "indicacion" o "cita". */
     val tipo: String? = null,
     val momento: String? = null,
+    val personaje: ReferenciaDto? = null,
+    val zona: ReferenciaDto? = null,
+    val sala: ReferenciaDto? = null,
     val lineas: List<LineaDialogoDto> = emptyList(),
 )
 

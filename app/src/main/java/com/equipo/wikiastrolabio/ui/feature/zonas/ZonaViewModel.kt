@@ -6,8 +6,8 @@ import androidx.navigation.toRoute
 import com.equipo.wikiastrolabio.domain.model.Resultado
 import com.equipo.wikiastrolabio.domain.model.Zona
 import com.equipo.wikiastrolabio.domain.model.ZonaResumen
-import com.equipo.wikiastrolabio.domain.usecase.mundo.ObtenerCasasUseCase
 import com.equipo.wikiastrolabio.domain.usecase.mundo.ObtenerZonaUseCase
+import com.equipo.wikiastrolabio.domain.usecase.mundo.ObtenerZonasUseCase
 import com.equipo.wikiastrolabio.ui.common.ContenidoViewModel
 import com.equipo.wikiastrolabio.ui.navigation.Ruta
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,14 +18,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
- * Detalle de una zona + pestañas para cambiar entre Casas sin regresar al mapa.
+ * Detalle de una zona + pestañas para cambiar entre todas las zonas sin regresar al mapa.
  * La zona elegida se guarda en [SavedStateHandle] para sobrevivir a la muerte del proceso.
  */
 @HiltViewModel
 class ZonaViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val obtenerZona: ObtenerZonaUseCase,
-    private val obtenerCasas: ObtenerCasasUseCase,
+    private val obtenerZonas: ObtenerZonasUseCase,
 ) : ContenidoViewModel<Zona>() {
 
     val slugSeleccionado: StateFlow<String> = savedStateHandle.getStateFlow(
@@ -35,13 +35,13 @@ class ZonaViewModel @Inject constructor(
 
     private val _pestanas = MutableStateFlow<List<ZonaResumen>>(emptyList())
 
-    /** Casas para las pestañas; vacío si no cargaron (la pantalla funciona sin ellas). */
+    /** Zonas para las pestañas; vacío si no cargaron (la pantalla funciona sin ellas). */
     val pestanas: StateFlow<List<ZonaResumen>> = _pestanas.asStateFlow()
 
     init {
         cargar()
         viewModelScope.launch {
-            (obtenerCasas() as? Resultado.Exito)?.let { _pestanas.value = it.datos }
+            (obtenerZonas() as? Resultado.Exito)?.let { _pestanas.value = it.datos }
         }
     }
 

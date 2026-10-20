@@ -1,57 +1,31 @@
 package com.equipo.wikiastrolabio.ui.feature.historia
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.equipo.wikiastrolabio.R
-import com.equipo.wikiastrolabio.domain.model.EntradaHistoria
 import com.equipo.wikiastrolabio.domain.model.SeccionHistoria
 import com.equipo.wikiastrolabio.ui.common.UiState
-import com.equipo.wikiastrolabio.ui.components.BotonAtrasPixel
-import com.equipo.wikiastrolabio.ui.components.ContenidoSegunEstado
+import com.equipo.wikiastrolabio.ui.components.Divisor
+import com.equipo.wikiastrolabio.ui.components.EncabezadoPantalla
+import com.equipo.wikiastrolabio.ui.components.FilaIndice
+import com.equipo.wikiastrolabio.ui.components.PantallaContenido
 import com.equipo.wikiastrolabio.ui.preview.DatosPreview
-import com.equipo.wikiastrolabio.ui.theme.Ambar400
-import com.equipo.wikiastrolabio.ui.theme.Background
-import com.equipo.wikiastrolabio.ui.theme.Blanco
-import com.equipo.wikiastrolabio.ui.theme.Cream200
-import com.equipo.wikiastrolabio.ui.theme.FuentePixelFallback
-import com.equipo.wikiastrolabio.ui.theme.FuentePixelTitulosFallback
-import com.equipo.wikiastrolabio.ui.theme.Obsidian900
-import com.equipo.wikiastrolabio.ui.theme.Sand300
-import com.equipo.wikiastrolabio.ui.theme.Slate800
-import com.equipo.wikiastrolabio.ui.theme.TerraCotta500
+import com.equipo.wikiastrolabio.ui.theme.Espaciado
+import com.equipo.wikiastrolabio.ui.theme.LocalAcento
 import com.equipo.wikiastrolabio.ui.theme.WikiAstrolabioTheme
 
 @Composable
@@ -70,14 +44,7 @@ fun HistoriaRoute(
     )
 }
 
-/**
- * Pantalla de Historia rediseñada con la misma estética retro de Figma:
- * - Botón atrás retro BotonAtrasPixel (cuadrado con borde ámbar).
- * - Título "HISTORIA" en tipografía pixel/serif retro.
- * - Subtítulo descriptivo en tono Sand-300.
- * - Secciones de cosmología con separador técnico.
- * - Tarjetas técnicas en Obsidian-900 con borde Slate-800 y flecha ámbar.
- */
+/** Índice de la Historia: cada sección de la API es un capítulo con sus entradas numeradas. */
 @Composable
 fun HistoriaScreen(
     uiState: UiState<List<SeccionHistoria>>,
@@ -87,173 +54,68 @@ fun HistoriaScreen(
     onRecargar: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(Background),
-    ) {
-        ContenidoSegunEstado(
-            uiState = uiState,
-            onReintentar = onReintentar,
-            onRecargar = onRecargar,
-        ) { secciones ->
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 14.dp),
-                verticalArrangement = Arrangement.spacedBy(14.dp),
-            ) {
-                // 1. Botón atrás retro cuadrado unificado
-                item {
-                    BotonAtrasPixel(onClick = onAtras)
-                }
-
-                // 2. Título principal "HISTORIA" y subtítulo
-                item {
-                    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                        Text(
-                            text = "HISTORIA",
-                            style = MaterialTheme.typography.headlineMedium.copy(
-                                fontFamily = FuentePixelTitulosFallback,
-                                fontWeight = FontWeight.ExtraBold,
-                                letterSpacing = 2.sp,
-                                fontSize = 26.sp,
-                            ),
-                            color = Blanco,
-                        )
-
-                        Text(
-                            text = stringResource(R.string.codex_historia_desc),
-                            style = MaterialTheme.typography.bodyMedium.copy(
-                                fontFamily = FuentePixelFallback,
-                                fontSize = 12.5.sp,
-                                letterSpacing = 0.4.sp,
-                            ),
-                            color = Sand300,
-                        )
-                    }
-                }
-
-                // 3. Secciones y entradas
-                secciones.forEach { seccion ->
-                    item(key = "seccion-${seccion.slug}") {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 8.dp, bottom = 4.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Text(
-                                text = seccion.titulo.uppercase(),
-                                style = MaterialTheme.typography.labelSmall.copy(
-                                    fontFamily = FuentePixelFallback,
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 10.sp,
-                                    letterSpacing = 1.5.sp,
-                                ),
-                                color = Sand300,
-                            )
-                            Spacer(modifier = Modifier.width(12.dp))
-                            HorizontalDivider(
-                                modifier = Modifier.weight(1f),
-                                thickness = 1.dp,
-                                color = Slate800,
-                            )
-                        }
-                    }
-
-                    items(seccion.entradas, key = { it.slug }) { entrada ->
-                        TarjetaEntradaHistoria(
-                            entrada = entrada,
-                            onClick = { onEntradaClick(entrada.slug) },
-                        )
-                    }
-                }
-
-                item {
-                    Spacer(modifier = Modifier.height(8.dp))
+    PantallaContenido(
+        uiState = uiState,
+        onReintentar = onReintentar,
+        onRecargar = onRecargar,
+        modifier = modifier,
+        encabezado = {
+            EncabezadoPantalla(
+                titulo = stringResource(R.string.historia_titulo),
+                antetitulo = stringResource(R.string.historia_antetitulo),
+                subtitulo = stringResource(R.string.historia_subtitulo),
+                onAtras = onAtras,
+                principal = true,
+            )
+        },
+    ) { secciones ->
+        secciones.forEachIndexed { indice, seccion ->
+            item(key = "capitulo-${seccion.slug}") {
+                EncabezadoCapitulo(numero = indice + 1, seccion = seccion)
+            }
+            itemsIndexed(seccion.entradas, key = { _, entrada -> entrada.slug }) { posicion, entrada ->
+                Column {
+                    FilaIndice(
+                        titulo = entrada.titulo,
+                        subtitulo = entrada.contenido,
+                        numero = posicion + 1,
+                        onClick = { onEntradaClick(entrada.slug) },
+                    )
+                    Divisor()
                 }
             }
         }
     }
 }
 
-/**
- * Tarjeta de entrada histórica con la estética unificada de Figma
- */
 @Composable
-private fun TarjetaEntradaHistoria(
-    entrada: EntradaHistoria,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(Obsidian900, RoundedCornerShape(2.dp))
-            .border(BorderStroke(1.dp, Slate800), RoundedCornerShape(2.dp))
-            .clickable(onClick = onClick)
-            .padding(16.dp),
+private fun EncabezadoCapitulo(numero: Int, seccion: SeccionHistoria) {
+    Column(
+        modifier = Modifier
+            .padding(top = Espaciado.xl)
+            .semantics(mergeDescendants = true) { heading() },
+        verticalArrangement = Arrangement.spacedBy(Espaciado.xs),
     ) {
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            Text(
-                text = entrada.titulo,
-                style = MaterialTheme.typography.titleMedium.copy(
-                    fontFamily = FuentePixelTitulosFallback,
-                    fontWeight = FontWeight.ExtraBold,
-                    fontSize = 17.sp,
-                    letterSpacing = 1.sp,
-                ),
-                color = TerraCotta500,
-            )
-
-            Text(
-                text = entrada.contenido,
-                style = MaterialTheme.typography.bodyMedium.copy(
-                    fontFamily = FuentePixelFallback,
-                    fontSize = 12.sp,
-                    lineHeight = 17.sp,
-                    letterSpacing = 0.3.sp,
-                ),
-                color = Cream200,
-            )
-
-            HorizontalDivider(
-                thickness = 1.dp,
-                color = Slate800,
-                modifier = Modifier.padding(top = 4.dp),
-            )
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    text = "LEER ENTRADA",
-                    style = MaterialTheme.typography.labelSmall.copy(
-                        fontFamily = FuentePixelFallback,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 10.sp,
-                        letterSpacing = 1.2.sp,
-                    ),
-                    color = Ambar400,
-                )
-
-                Icon(
-                    painter = painterResource(R.drawable.ic_flecha_derecha_pixel),
-                    contentDescription = null,
-                    tint = Ambar400,
-                    modifier = Modifier.size(14.dp),
-                )
-            }
-        }
+        Text(
+            text = stringResource(R.string.historia_capitulo, numero.toString().padStart(2, '0')).uppercase(),
+            style = MaterialTheme.typography.labelMedium,
+            color = LocalAcento.current,
+        )
+        Text(
+            text = seccion.titulo,
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.secondary,
+        )
+        Text(
+            text = pluralStringResource(R.plurals.historia_entradas, seccion.entradas.size, seccion.entradas.size).uppercase(),
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Divisor(Modifier.padding(top = Espaciado.s))
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFF0A131C)
 @Composable
 private fun HistoriaScreenPreview() {
     WikiAstrolabioTheme {

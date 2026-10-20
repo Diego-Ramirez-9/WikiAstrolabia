@@ -4,10 +4,21 @@
     <!-- Generales -->
     <string name="accion_reintentar">Reintentar</string>
     <string name="accion_atras">Regresar</string>
-    <string name="aviso_sin_conexion">Sin conexión: mostrando el contenido guardado.</string>
-    <string name="error_sin_conexion">No hay conexión y todavía no hay contenido guardado. Revisa tu internet e intenta de nuevo.</string>
-    <string name="error_no_encontrado">Este contenido ya no existe.</string>
-    <string name="error_servidor">El servidor tuvo un problema. Intenta más tarde.</string>
+    <string name="navegacion_anterior">Anterior</string>
+    <string name="navegacion_siguiente">Siguiente</string>
+    <string name="ilustracion_pendiente">Ilustración pendiente</string>
+    <string name="estado_desplegado">Desplegada</string>
+    <string name="estado_plegado">Plegada</string>
+
+    <!-- Estados de carga y error -->
+    <string name="estado_cargando">Consultando el códex…</string>
+    <string name="aviso_sin_conexion">Sin conexión · mostrando lo guardado</string>
+    <string name="error_sin_conexion_titulo">Sin conexión</string>
+    <string name="error_sin_conexion">El códex necesita internet la primera vez que abres esta sección. Revisa tu conexión e intenta de nuevo.</string>
+    <string name="error_no_encontrado_titulo">Página perdida</string>
+    <string name="error_no_encontrado">Este contenido ya no existe en el códex.</string>
+    <string name="error_generico_titulo">El Reloj se detuvo</string>
+    <string name="error_servidor">El servidor tuvo un problema. Intenta en unos minutos.</string>
     <string name="error_datos_invalidos">No se pudo leer la información recibida. Intenta más tarde o actualiza la app.</string>
     <string name="error_desconocido">Ocurrió un error inesperado.</string>
 
@@ -20,55 +31,98 @@
     <string name="inicio_titulo">Astrolabio</string>
     <string name="inicio_registro">Registro del Gran Reloj Cósmico</string>
     <string name="inicio_lema">Cada secreto, a su tiempo.</string>
-    <string name="inicio_subtitulo">Tu guía al universo de Astrolabio.</string>
+    <string name="inicio_subtitulo">Tu guía al universo de Astrolabio: su historia, sus Casas, quienes lo habitan y todo lo que dejaron atrás.</string>
     <string name="inicio_explora">Explora el códex</string>
+    <string name="inicio_destacado">Comienza aquí</string>
     <string name="codex_historia">Historia</string>
-    <string name="codex_historia_desc">Descubre el origen del Gran Reloj.</string>
+    <string name="codex_historia_desc">El origen del Gran Reloj y lo que lo rompió.</string>
     <string name="codex_mundo">Mundo</string>
-    <string name="codex_mundo_desc">Explora las Casas y observatorios.</string>
+    <string name="codex_mundo_desc">Recorre el mapa del Reloj, sus Casas y sus salas.</string>
     <string name="codex_personajes">Personajes</string>
-    <string name="codex_personajes_desc">Conoce a quienes forman parte de esta historia.</string>
+    <string name="codex_personajes_desc">Quienes habitan entre los engranajes.</string>
     <string name="codex_mecanicas">Mecánicas</string>
-    <string name="codex_mecanicas_desc">Aprende las habilidades de Almanaque XII.</string>
+    <string name="codex_mecanicas_desc">Las habilidades de Almanaque XII.</string>
     <string name="codex_archivos">Archivos</string>
-    <string name="codex_archivos_desc">Consulta fragmentos, poemas y notas.</string>
+    <string name="codex_archivos_desc">Poemas y notas que quedaron en la torre.</string>
 
     <!-- Historia -->
     <string name="historia_titulo">Historia</string>
+    <string name="historia_antetitulo">Crónica del Gran Reloj</string>
+    <string name="historia_subtitulo">De los creadores al escape de la luz de Ofiuco.</string>
+    <string name="historia_capitulo">Capítulo %1$s</string>
+    <string name="historia_capitulo_y_titulo">Capítulo %1$s · %2$s</string>
+    <plurals name="historia_entradas">
+        <item quantity="one">%d entrada</item>
+        <item quantity="many">%d entradas</item>
+        <item quantity="other">%d entradas</item>
+    </plurals>
 
-    <!-- Mundo -->
-    <string name="mundo_mapa">Mapa del cosmos</string>
-    <string name="mundo_toca_marcador">Toca un marcador para explorar.</string>
+    <!-- Mundo y zonas -->
+    <string name="mundo_titulo">El Gran Reloj</string>
+    <string name="mundo_antetitulo">Mapa del cosmos</string>
+    <string name="mundo_toca_marcador">Toca un marcador para ver el lugar</string>
+    <string name="mundo_localizacion">Localización %1$s · %2$s</string>
     <string name="mundo_explorar">Explorar</string>
-
-    <!-- Zonas y salas -->
-    <string name="zona_titulo">Zonas</string>
-    <string name="zona_constelacion">Constelación: %1$s</string>
-    <string name="zona_resumen">Resumen</string>
+    <string name="mundo_lugares">Lugares del Reloj</string>
+    <string name="tipo_zona_eje">Eje del Reloj</string>
+    <string name="tipo_zona_casa">Casa del zodiaco</string>
+    <string name="tipo_zona_cierre">Desenlace</string>
+    <string name="tipo_zona_desconocido">Zona</string>
+    <string name="zona_titulo">Zona</string>
+    <string name="zona_constelacion">Constelación de %1$s</string>
+    <string name="zona_tutorial">Tutorial</string>
+    <string name="zona_sin_plataformas">Sin plataformas</string>
+    <string name="zona_idea_central">Idea central</string>
+    <string name="zona_tono_emocional">Tono emocional</string>
+    <string name="zona_habitaciones">Habitaciones</string>
     <string name="zona_exterior">Exterior</string>
     <string name="zona_ambientacion">Ambientación</string>
     <string name="zona_narrativa">Narrativa</string>
-    <string name="zona_restauracion">Restauración</string>
-    <string name="zona_habitaciones">Habitaciones · %1$d</string>
     <string name="zona_mecanicas">Mecánicas de la zona</string>
-    <string name="sala_zona_segura">Zona segura</string>
+    <string name="zona_coleccionables">Coleccionables</string>
+    <string name="zona_direccion_arte">Dirección de arte</string>
+    <string name="zona_paleta">Paleta</string>
+    <string name="zona_iluminacion">Iluminación</string>
+    <string name="zona_sensacion_visual">Sensación visual</string>
+    <string name="zona_tinte">Color de la zona</string>
+    <string name="zona_restauracion">Al restaurarla</string>
+
+    <!-- Salas -->
+    <string name="sala_posicion">Habitación %1$s / %2$s</string>
+    <string name="sala_posicion_simple">Habitación %1$s</string>
+    <string name="sala_ver_zona">%1$s</string>
     <string name="sala_observatorio">Observatorio</string>
-    <string name="sala_descripcion">Descripción</string>
+    <string name="sala_zona_segura">Zona segura</string>
     <string name="sala_aprendizaje">Se aprende</string>
-    <string name="sala_exterior">Exterior</string>
-    <string name="sala_interior">Interior</string>
-    <string name="sala_luz">Luz</string>
-    <string name="sala_descubrimientos">Descubrimientos</string>
+    <string name="sala_observatorio_mayor">Observatorio mayor</string>
     <string name="sala_archivos">Archivos en esta sala</string>
+    <string name="sala_anterior">Sala anterior</string>
+    <string name="sala_siguiente">Sala siguiente</string>
+    <string name="observatorio_exterior">Exterior</string>
+    <string name="observatorio_interior">Interior</string>
+    <string name="observatorio_luz">Luz</string>
+    <string name="observatorio_audio">Sonido</string>
+    <string name="observatorio_descubrimientos">Descubrimientos</string>
+
+    <!-- Diálogos -->
+    <string name="dialogos_titulo">Diálogos</string>
+    <string name="dialogo_sin_titulo">Diálogo</string>
+    <string name="dialogo_escena">Escena</string>
+    <string name="dialogo_indicacion">Indicaciones</string>
+    <string name="dialogo_cita">Cita</string>
+    <string name="dialogo_habla">Habla %1$s</string>
+    <string name="dialogo_ocurre_en">En %1$s</string>
 
     <!-- Personajes -->
     <string name="personajes_titulo">Personajes</string>
+    <string name="personajes_antetitulo">Habitantes del Reloj</string>
     <string name="personajes_subtitulo">Quienes habitan entre los engranajes.</string>
+    <string name="personajes_numero">Personaje %1$s</string>
     <string name="personaje_origen">Origen</string>
     <string name="personaje_motivacion">Motivación</string>
     <string name="personaje_personalidad">Personalidad</string>
     <string name="personaje_arco">Arco</string>
-    <string name="personaje_dialogos">Diálogos</string>
+    <string name="personaje_rasgos">Rasgos</string>
     <string name="rol_protagonista">Protagonista</string>
     <string name="rol_guia">Guía</string>
     <string name="rol_secundario">Secundario</string>
@@ -84,19 +138,29 @@
 
     <!-- Mecánicas -->
     <string name="mecanicas_titulo">Mecánicas</string>
-    <string name="mecanicas_subtitulo">Manual de campo de Almanaque XII.</string>
-    <string name="mecanicas_acciones">Acciones</string>
-    <string name="mecanicas_reglas">Reglas</string>
+    <string name="mecanicas_antetitulo">Manual de campo</string>
+    <string name="mecanicas_subtitulo">Lo que Almanaque XII puede hacer y las reglas que lo gobiernan.</string>
+    <string name="mecanicas_habilidades">Habilidades</string>
+    <string name="mecanicas_acciones">Acciones narrativas</string>
+    <string name="mecanicas_reglas">Reglas del Reloj</string>
+    <string name="habilidad_numero">Habilidad %1$s</string>
     <string name="habilidad_origen">Origen en el mundo</string>
     <string name="habilidad_senal">Señal para el jugador</string>
 
     <!-- Archivos -->
     <string name="archivos_titulo">Archivos</string>
+    <string name="archivos_antetitulo">Biblioteca del Reloj</string>
     <string name="archivos_subtitulo">Vestigios de un tiempo que permanece.</string>
+    <string name="archivos_colecciones">Colecciones</string>
+    <string name="archivos_coleccion">Colección %1$s</string>
+    <plurals name="archivos_registros">
+        <item quantity="one">%d registro</item>
+        <item quantity="many">%d registros</item>
+        <item quantity="other">%d registros</item>
+    </plurals>
     <string name="archivos_vacio">Aún no hay registros en esta colección.</string>
     <string name="archivo_autor">— %1$s</string>
     <string name="archivo_ubicacion">Dónde encontrarlo</string>
-    <string name="archivo_ver_sala">Ver sala: %1$s</string>
-    <string name="accion_expandir">Mostrar %1$s</string>
-    <string name="accion_contraer">Ocultar %1$s</string>
+    <string name="categoria_poema">Poema</string>
+    <string name="categoria_nota_xi">Nota de XI</string>
 </resources>

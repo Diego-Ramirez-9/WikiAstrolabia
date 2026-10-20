@@ -2,27 +2,36 @@ package com.equipo.wikiastrolabio.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-// Variables de diseño de Figma
-val Background = Color(0xFF0B151E)
-val Obsidian900 = Color(0xFF0D2B45)
-val Slate800 = Color(0xFF203C56)
-val Slate700 = Color(0xFF544E68)
-val MutedPurple600 = Color(0xFF8D697A)
-val TerraCotta500 = Color(0xFFD08159)
+/*
+ * Paleta de WikiAstrolabio: "códex del Gran Reloj".
+ *
+ * Regla 60-30-10: 60 % neutrales azul nocturno (fondos y paneles), 30 % pergamino (texto) y
+ * 10 % acentos. El ámbar es el ÚNICO color de interacción (selección, botones, enlaces); el
+ * terracota marca títulos de sección. Los tintes de zona sustituyen al ámbar dentro de cada Casa.
+ *
+ * Las pantallas no usan estos valores directo: usan MaterialTheme.colorScheme (ver Theme.kt)
+ * o LocalAcento para el color de la zona.
+ */
+
+// Neutrales: azul nocturno, del fondo hacia la superficie más elevada.
+val Noche950 = Color(0xFF0A131C)
+val Noche900 = Color(0xFF0F1B27)
+val Noche850 = Color(0xFF15253A)
+val Noche800 = Color(0xFF1D3046)
+val Noche700 = Color(0xFF2B4560)
+val Niebla400 = Color(0xFF8396AA)
+
+// Pergamino: texto.
+val Crema100 = Color(0xFFF6EBDA)
+val Pergamino300 = Color(0xFFCDBEA8)
+
+// Acentos.
 val Ambar400 = Color(0xFFFFAA5E)
-val Sand300 = Color(0xFFFFD4A3)
-val Cream200 = Color(0xFFFFECD6)
-val Blanco = Color(0xFFFFFFFF)
-val Negro = Color(0xFF000000)
+val Terracota500 = Color(0xFFD08159)
+val Arena300 = Color(0xFFFFD4A3)
+val Rojo400 = Color(0xFFE5776B)
 
-// Compatibilidad con código existente
-val AzulNoche = Background
-val AzulPanel = Obsidian900
-val AzulPanelElevado = Slate800
-val AzulBorde = Slate800
-val Cobre = TerraCotta500
-val CobreOscuro = Color(0xFF2B180B)
-val Pergamino = Cream200
-val GrisNiebla = Sand300
-val RojoAlerta = Color(0xFFE57373)
-
+// Tintes de zona (campo "tinteFondo" de la API). Los desconocidos usan Ambar400.
+val TinteVioleta = Color(0xFFAE93E6)
+val TinteTurquesa = Color(0xFF4FC6B6)
+val TinteLaton = Color(0xFFD9B36C)

@@ -7,9 +7,8 @@
     </style>
 
     <!--
-        Splash del sistema (androidx.core:core-splashscreen). Se mantiene visible mientras
-        MainViewModel consulta /contenido/version. PROVISIONAL: UI/UX define el ícono final
-        (windowSplashScreenAnimatedIcon) y el fondo.
+        Splash del sistema (androidx.core:core-splashscreen): el astrolabio pixel del ícono sobre
+        el azul nocturno. Se mantiene visible mientras MainViewModel consulta /contenido/version.
     -->
     <style name="Theme.WikiAstrolabio.Splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/fondo_app</item>

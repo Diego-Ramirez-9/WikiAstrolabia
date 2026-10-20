@@ -1,55 +1,36 @@
 package com.equipo.wikiastrolabio.ui.feature.mecanicas
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.equipo.wikiastrolabio.R
+import com.equipo.wikiastrolabio.domain.model.Habilidad
 import com.equipo.wikiastrolabio.domain.model.Mecanicas
+import com.equipo.wikiastrolabio.domain.model.Regla
 import com.equipo.wikiastrolabio.ui.common.UiState
-import com.equipo.wikiastrolabio.ui.components.BotonAtrasPixel
-import com.equipo.wikiastrolabio.ui.components.ContenidoSegunEstado
+import com.equipo.wikiastrolabio.ui.components.EncabezadoPantalla
+import com.equipo.wikiastrolabio.ui.components.EtiquetaSeccion
+import com.equipo.wikiastrolabio.ui.components.PanelPixel
+import com.equipo.wikiastrolabio.ui.components.PantallaContenido
+import com.equipo.wikiastrolabio.ui.components.pixel.IconoEstrellaGuia
 import com.equipo.wikiastrolabio.ui.feature.mecanicas.components.TarjetaHabilidad
 import com.equipo.wikiastrolabio.ui.preview.DatosPreview
-import com.equipo.wikiastrolabio.ui.theme.Ambar400
-import com.equipo.wikiastrolabio.ui.theme.Background
-import com.equipo.wikiastrolabio.ui.theme.Blanco
-import com.equipo.wikiastrolabio.ui.theme.Cream200
-import com.equipo.wikiastrolabio.ui.theme.FuentePixelFallback
-import com.equipo.wikiastrolabio.ui.theme.FuentePixelTitulosFallback
-import com.equipo.wikiastrolabio.ui.theme.Sand300
-import com.equipo.wikiastrolabio.ui.theme.Slate800
+import com.equipo.wikiastrolabio.ui.theme.Espaciado
+import com.equipo.wikiastrolabio.ui.theme.LocalAcento
 import com.equipo.wikiastrolabio.ui.theme.WikiAstrolabioTheme
 
 @Composable
@@ -66,14 +47,7 @@ fun MecanicasRoute(
     )
 }
 
-/**
- * Pantalla de Mecánicas rediseñada según el prototipo de Figma:
- * - Botón atrás retro cuadrado con borde ámbar.
- * - Título principal "MECANICAS" en tipografía pixel/serif retro.
- * - Subtítulo "Manual de campo de Almanaque XII.".
- * - Tarjetas técnicas de habilidades jugables (SALTO 01, ANCLA 02, GANCHO 03, ESCALAR 04).
- * - Secciones de acciones narrativas y reglas generales accesibles al desplazar.
- */
+/** Manual de campo de Almanaque XII: habilidades jugables, acciones narrativas y reglas. */
 @Composable
 fun MecanicasScreen(
     uiState: UiState<Mecanicas>,
@@ -82,169 +56,73 @@ fun MecanicasScreen(
     onRecargar: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(Background),
-    ) {
-        ContenidoSegunEstado(
-            uiState = uiState,
-            onReintentar = onReintentar,
-            onRecargar = onRecargar,
-        ) { mecanicas ->
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 14.dp),
-                verticalArrangement = Arrangement.spacedBy(14.dp),
-            ) {
-                // 1. Botón atrás retro cuadrado con borde ámbar
-                item {
-                    BotonAtrasPixel(onClick = onAtras)
-                }
+    PantallaContenido(
+        uiState = uiState,
+        onReintentar = onReintentar,
+        onRecargar = onRecargar,
+        modifier = modifier,
+        encabezado = {
+            EncabezadoPantalla(
+                titulo = stringResource(R.string.mecanicas_titulo),
+                antetitulo = stringResource(R.string.mecanicas_antetitulo),
+                subtitulo = stringResource(R.string.mecanicas_subtitulo),
+                onAtras = onAtras,
+                principal = true,
+            )
+        },
+    ) { mecanicas ->
+        if (mecanicas.jugables.isNotEmpty()) {
+            item(key = "jugables-titulo") {
+                EtiquetaSeccion(stringResource(R.string.mecanicas_habilidades), numero = 1)
+            }
+            items(mecanicas.jugables, key = { it.slug }) { habilidad -> TarjetaHabilidad(habilidad) }
+        }
+        if (mecanicas.narrativas.isNotEmpty()) {
+            item(key = "narrativas-titulo") {
+                EtiquetaSeccion(stringResource(R.string.mecanicas_acciones), numero = 2)
+            }
+            items(mecanicas.narrativas, key = { it.slug }) { habilidad -> TarjetaAccion(habilidad) }
+        }
+        if (mecanicas.reglas.isNotEmpty()) {
+            item(key = "reglas-titulo") {
+                EtiquetaSeccion(stringResource(R.string.mecanicas_reglas), numero = 3)
+            }
+            itemsIndexed(mecanicas.reglas, key = { _, regla -> regla.slug }) { indice, regla -> TarjetaRegla(indice + 1, regla) }
+        }
+    }
+}
 
-                // 2. Título principal "MECANICAS" y subtítulo
-                item {
-                    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                        Text(
-                            text = "MECANICAS",
-                            style = MaterialTheme.typography.headlineMedium.copy(
-                                fontFamily = FuentePixelTitulosFallback,
-                                fontWeight = FontWeight.ExtraBold,
-                                letterSpacing = 2.sp,
-                                fontSize = 26.sp,
-                            ),
-                            color = Blanco,
-                        )
+/** Acción narrativa (Observar, Descansar…): más sencilla que una habilidad jugable. */
+@Composable
+private fun TarjetaAccion(habilidad: Habilidad) {
+    PanelPixel {
+        Row(horizontalArrangement = Arrangement.spacedBy(Espaciado.m), verticalAlignment = Alignment.CenterVertically) {
+            IconoEstrellaGuia(tamano = 18.dp, color = LocalAcento.current)
+            Text(habilidad.nombre.uppercase(), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
+        }
+        Text(habilidad.descripcion, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    }
+}
 
-                        Text(
-                            text = stringResource(R.string.mecanicas_subtitulo),
-                            style = MaterialTheme.typography.bodyMedium.copy(
-                                fontFamily = FuentePixelFallback,
-                                fontSize = 12.5.sp,
-                                letterSpacing = 0.4.sp,
-                            ),
-                            color = Sand300,
-                        )
-                    }
-                }
-
-                // 3. Tarjetas de habilidades jugables (Salto, Ancla, Gancho, Escalar...)
-                items(mecanicas.jugables, key = { it.slug }) { habilidad ->
-                    TarjetaHabilidad(habilidad = habilidad)
-                }
-
-                // 4. Acciones narrativas adicionales
-                if (mecanicas.narrativas.isNotEmpty()) {
-                    item {
-                        Spacer(modifier = Modifier.height(10.dp))
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 6.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Text(
-                                text = "ACCIONES NARRATIVAS",
-                                style = MaterialTheme.typography.labelSmall.copy(
-                                    fontFamily = FuentePixelFallback,
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 10.sp,
-                                    letterSpacing = 1.5.sp,
-                                ),
-                                color = Sand300,
-                            )
-                            Spacer(modifier = Modifier.width(12.dp))
-                            HorizontalDivider(
-                                modifier = Modifier.weight(1f),
-                                thickness = 1.dp,
-                                color = Slate800,
-                            )
-                        }
-                    }
-
-                    items(mecanicas.narrativas, key = { it.slug }) { accion ->
-                        BloqueMecanicaRetro(accion.nombre, accion.descripcion)
-                    }
-                }
-
-                // 5. Reglas generales del mecanismo
-                if (mecanicas.reglas.isNotEmpty()) {
-                    item {
-                        Spacer(modifier = Modifier.height(10.dp))
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 6.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Text(
-                                text = "REGLAS DEL RELOJ",
-                                style = MaterialTheme.typography.labelSmall.copy(
-                                    fontFamily = FuentePixelFallback,
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 10.sp,
-                                    letterSpacing = 1.5.sp,
-                                ),
-                                color = Sand300,
-                            )
-                            Spacer(modifier = Modifier.width(12.dp))
-                            HorizontalDivider(
-                                modifier = Modifier.weight(1f),
-                                thickness = 1.dp,
-                                color = Slate800,
-                            )
-                        }
-                    }
-
-                    items(mecanicas.reglas, key = { it.slug }) { regla ->
-                        BloqueMecanicaRetro(regla.nombre, regla.descripcion)
-                    }
-                }
-
-                // Espaciador final
-                item {
-                    Spacer(modifier = Modifier.height(8.dp))
-                }
+@Composable
+private fun TarjetaRegla(numero: Int, regla: Regla) {
+    PanelPixel {
+        Row(horizontalArrangement = Arrangement.spacedBy(Espaciado.m)) {
+            Text(
+                text = numero.toString().padStart(2, '0'),
+                style = MaterialTheme.typography.titleLarge,
+                color = LocalAcento.current,
+                modifier = Modifier.width(32.dp),
+            )
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(Espaciado.xs)) {
+                Text(regla.nombre.uppercase(), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
+                Text(regla.descripcion, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
     }
 }
 
-@Composable
-private fun BloqueMecanicaRetro(
-    titulo: String,
-    descripcion: String,
-    modifier: Modifier = Modifier,
-) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp),
-        verticalArrangement = Arrangement.spacedBy(4.dp),
-    ) {
-        Text(
-            text = titulo.uppercase(),
-            style = MaterialTheme.typography.labelSmall.copy(
-                fontFamily = FuentePixelFallback,
-                fontWeight = FontWeight.Bold,
-                fontSize = 11.sp,
-                letterSpacing = 1.sp,
-            ),
-            color = Ambar400,
-        )
-
-        Text(
-            text = descripcion,
-            style = MaterialTheme.typography.bodyMedium.copy(
-                fontSize = 13.sp,
-                lineHeight = 18.sp,
-            ),
-            color = Cream200,
-        )
-    }
-}
-
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 0xFF0A131C, heightDp = 1400)
 @Composable
 private fun MecanicasScreenPreview() {
     WikiAstrolabioTheme {

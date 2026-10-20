@@ -2,7 +2,7 @@ package com.equipo.wikiastrolabio.ui.feature.historia
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.toRoute
-import com.equipo.wikiastrolabio.domain.model.EntradaHistoria
+import com.equipo.wikiastrolabio.domain.model.LecturaHistoria
 import com.equipo.wikiastrolabio.domain.usecase.historia.ObtenerEntradaHistoriaUseCase
 import com.equipo.wikiastrolabio.ui.common.ContenidoViewModel
 import com.equipo.wikiastrolabio.ui.navigation.Ruta
@@ -13,7 +13,7 @@ import javax.inject.Inject
 class EntradaHistoriaViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val obtenerEntrada: ObtenerEntradaHistoriaUseCase,
-) : ContenidoViewModel<EntradaHistoria>() {
+) : ContenidoViewModel<LecturaHistoria>() {
 
     private val slug = savedStateHandle.toRoute<Ruta.EntradaHistoriaDetalle>().slug
 

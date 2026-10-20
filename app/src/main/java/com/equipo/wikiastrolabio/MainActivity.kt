@@ -15,13 +15,14 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val viewModel: MainViewModel by viewModels()
+    // Crearlo aquí arranca la sincronización del contenido desde el primer momento.
+    private val mainViewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Debe ir antes de super.onCreate (API de splash de AndroidX).
-        val splash = installSplashScreen()
+        installSplashScreen()
         super.onCreate(savedInstanceState)
-        splash.setKeepOnScreenCondition { !viewModel.listo.value }
+        mainViewModel // Fuerza su creación (la propiedad es perezosa).
 
         // La app siempre es oscura: íconos claros en las barras del sistema aunque el
         // teléfono esté en modo claro.

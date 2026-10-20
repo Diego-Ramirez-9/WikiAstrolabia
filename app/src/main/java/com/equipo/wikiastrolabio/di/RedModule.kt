@@ -1,13 +1,10 @@
 package com.equipo.wikiastrolabio.di
 
-import android.content.Context
 import com.equipo.wikiastrolabio.BuildConfig
 import com.equipo.wikiastrolabio.data.remote.AstrolabioApi
-import com.equipo.wikiastrolabio.data.remote.fake.FakeApiInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -19,7 +16,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
-/** Cliente HTTP exclusivo de la API (con el interceptor falso y el log). Coil usa el cliente base. */
+/** Cliente HTTP exclusivo de la API (con el log en debug). Coil usa el cliente base. */
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class ClienteApi
@@ -50,13 +47,7 @@ object RedModule {
     @Provides
     @Singleton
     @ClienteApi
-    fun provideClienteApi(
-        base: OkHttpClient,
-        @ApplicationContext context: Context,
-    ): OkHttpClient = base.newBuilder().apply {
-        if (BuildConfig.USE_FAKE_API) {
-            addInterceptor(FakeApiInterceptor.desdeAssets(context.assets, BuildConfig.API_BASE_URL))
-        }
+    fun provideClienteApi(base: OkHttpClient): OkHttpClient = base.newBuilder().apply {
         if (BuildConfig.DEBUG) {
             addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
         }

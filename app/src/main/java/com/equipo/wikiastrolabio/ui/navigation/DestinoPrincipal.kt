@@ -15,17 +15,31 @@ import com.equipo.wikiastrolabio.R
  */
 enum class DestinoPrincipal(
     val ruta: Ruta,
+    /** Primera pantalla de la pestaña (a la que se regresa al volver a tocarla). */
+    val rutaInicial: Ruta,
     @param:StringRes val etiqueta: Int,
     @param:DrawableRes val icono: Int,
 ) {
-    INICIO(Ruta.PestanaInicio, R.string.nav_inicio, R.drawable.ic_nav_inicio),
-    MUNDO(Ruta.PestanaMundo, R.string.nav_mundo, R.drawable.ic_nav_mundo),
-    ARCHIVOS(Ruta.PestanaArchivos, R.string.nav_archivos, R.drawable.ic_nav_archivos),
+    INICIO(Ruta.PestanaInicio, Ruta.Inicio, R.string.nav_inicio, R.drawable.ic_nav_inicio),
+    MUNDO(Ruta.PestanaMundo, Ruta.Mundo, R.string.nav_mundo, R.drawable.ic_nav_mundo),
+    ARCHIVOS(Ruta.PestanaArchivos, Ruta.Archivos, R.string.nav_archivos, R.drawable.ic_nav_archivos),
 }
 
 /** La pestaña está seleccionada si el destino actual vive dentro de su grafo. */
 fun NavDestination?.perteneceA(destino: DestinoPrincipal): Boolean =
     this?.hierarchy?.any { it.hasRoute(destino.ruta::class) } == true
+
+/**
+ * Toque en la barra inferior: en otra pestaña, cambia a ella; en la pestaña actual, regresa a
+ * su primera pantalla (como en la mayoría de las apps con pestañas).
+ */
+fun NavController.tocarPestana(destino: DestinoPrincipal) {
+    if (currentDestination.perteneceA(destino)) {
+        popBackStack(destino.rutaInicial, inclusive = false)
+    } else {
+        navegarAPestana(destino)
+    }
+}
 
 /**
  * Cambia de pestaña conservando la pila de cada una (si estabas en una sala dentro de

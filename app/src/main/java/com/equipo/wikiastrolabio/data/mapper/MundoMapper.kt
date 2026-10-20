@@ -66,12 +66,21 @@ fun ZonaDto.aDominio() = Zona(
     subtitulo = subtitulo,
     tipo = tipoZonaDesdeApi(tipo),
     constelacion = constelacion?.let { Constelacion(nombre = it.nombre, sobrenombre = it.sobrenombre) },
+    esNivel = esNivel,
+    esTutorial = esTutorial,
     etiquetas = etiquetas,
     resumen = resumen,
+    tonoEmocional = tonoEmocional,
+    ideaCentral = ideaCentral,
     exterior = exterior,
     ambientacion = ambientacion,
     narrativa = narrativa,
     restauracion = restauracion,
+    coleccionables = coleccionables,
+    paleta = paleta,
+    iluminacion = iluminacion,
+    sensacionVisual = sensacionVisual,
+    tinte = tinteFondo,
     imagenUrl = imagenUrl,
     salas = salas.sortedBy { it.orden }.map { it.aDominio() },
     mecanicas = mecanicas.map { it.aDominio() },
@@ -90,6 +99,7 @@ fun MecanicaZonaDto.aDominio() = MecanicaZona(slug = slug, nombre = nombre, desc
 fun SalaDto.aDominio() = Sala(
     slug = slug,
     nombre = nombre,
+    orden = orden,
     descripcion = descripcion,
     aprendizaje = aprendizaje,
     esZonaSegura = esZonaSegura,
@@ -101,11 +111,17 @@ fun SalaDto.aDominio() = Sala(
 )
 
 fun ObservatorioDto.aDominio() = Observatorio(
+    slug = slug,
     nombre = nombre,
+    ubicacion = ubicacion,
+    resumen = resumen,
     exterior = exterior,
     interior = interior,
     luz = luz,
+    audio = audio,
     descubrimientos = descubrimientos,
+    contenidoBreve = contenidoBreve,
+    imagenUrl = imagenUrl,
 )
 
 fun ArchivoEnSalaDto.aDominio() = ArchivoEnSala(slug = slug, titulo = titulo, categoria = categoria)

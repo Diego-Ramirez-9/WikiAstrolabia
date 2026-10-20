@@ -2,26 +2,24 @@
 
 Aplicación móvil Android que funciona como wiki oficial del videojuego **Astrolabio**, un plataformero 2D de un jugador donde se asume el rol de **Almanaque XII** en su ascenso por el Gran Reloj Cósmico, usando puntos de anclaje y un gancho para superar abismos y obstáculos.
 
-La app permite consultar la historia, el mundo (mapa, Casas y salas), los personajes, las mecánicas y los archivos del juego, con modo offline.
-
-> **Estado actual:** base técnica lista. Mientras se termina la API, la app usa **respuestas falsas** con el contenido real del juego (ver [Modo API falsa](#modo-api-falsa)). El diseño visual es provisional y lo define el equipo de UI/UX.
+La app muestra la historia, el mundo (mapa, Casas y salas), los personajes, las mecánicas y los archivos del juego. **Todo el contenido viene de la API del equipo** y se guarda para consultarlo sin conexión.
 
 ## Stack técnico
 
 | Área | Tecnología |
 |---|---|
 | Lenguaje | Kotlin 2.4 |
-| Interfaz | Jetpack Compose + Material 3 |
+| Interfaz | Jetpack Compose + Material 3, con sistema de diseño propio en pixel art |
 | Navegación | Navigation Compose con rutas tipadas (`@Serializable`) |
 | Arquitectura | MVVM por capas (UI, dominio, datos) + Repository + casos de uso |
 | Inyección de dependencias | Hilt |
 | Red | Retrofit 3 + OkHttp 5 + kotlinx.serialization |
 | Caché offline | Room (respuestas de la API) + DataStore (versión del contenido) |
 | Imágenes | Coil 3 (con `FilterQuality.None` para pixel art) |
-| Backend | API REST propia en **Node.js + Express**, desplegada en **Vercel** |
+| Backend | API REST propia en **Node.js + Express**, en **Vercel**: `https://astrolabio-api.vercel.app/api/v1/` |
 | SDK mínimo | Android 8.0 (API 26) |
 
-**La app solo habla con nuestra API.** Supabase se usa únicamente como base de datos (PostgreSQL) y almacenamiento de imágenes, y solo la API tiene sus credenciales. La app no usa `supabase-kt` ni guarda claves de Supabase.
+**La app solo habla con nuestra API.** Supabase se usa únicamente como base de datos (PostgreSQL) y almacenamiento de imágenes, y solo la API tiene sus credenciales. La app no usa `supabase-kt` ni guarda claves.
 
 ```
 App (Compose → ViewModel → Caso de uso → Repository) ──HTTPS/JSON──▶ API Node.js (Vercel) ──▶ Supabase
@@ -38,41 +36,33 @@ App (Compose → ViewModel → Caso de uso → Repository) ──HTTPS/JSON─�
    ```bash
    git checkout develop
    ```
-3. (Opcional) Configura `local.properties` en la raíz del proyecto. Este archivo **no se sube a GitHub** y Android Studio ya lo crea con `sdk.dir`:
-   ```properties
-   # true (por defecto): usa las respuestas falsas de app/src/debug/assets/fake-api
-   # false: llama a la API real
-   USE_FAKE_API=true
+3. Espera a que Gradle sincronice y ejecuta la app en un emulador o dispositivo con internet. Si la sincronización falla con `PKIX path building failed`, revisa [Solución de problemas](#solución-de-problemas).
 
-   # URL de la API para el build debug (por defecto, la de producción en gradle.properties).
-   # Para la API corriendo en tu computadora, desde el emulador:
-   # API_BASE_URL=http://10.0.2.2:3000/api/v1/
-   ```
-4. Espera a que Gradle sincronice y ejecuta la app en un emulador o dispositivo. Si la sincronización falla con un error `PKIX path building failed`, revisa [Solución de problemas](#solución-de-problemas).
+La URL de la API está en `gradle.properties` (`astrolabio.apiUrl`). Para probar el build debug contra otro despliegue (por ejemplo, una vista previa de Vercel), agrégala a `local.properties`, que no se sube a GitHub:
 
-La URL de producción está en `gradle.properties` (`astrolabio.apiUrl`). **Pendiente:** reemplazarla por el dominio real cuando se despliegue la API en Vercel.
+```properties
+API_BASE_URL=https://otro-despliegue.vercel.app/api/v1/
+```
 
-## Modo API falsa
+## Cómo usa la app la API
 
-Mientras no exista la API, el build debug responde cada petición con un JSON de `app/src/debug/assets/fake-api/`, generado a partir de `database/02_seed.sql` del repositorio de la API. Funciona a nivel HTTP (`FakeApiInterceptor`), así que Retrofit, los DTO y la caché se prueban igual que con la API real. Pasar a la API real es solo poner `USE_FAKE_API=false`.
+- Al abrir, consulta `GET /contenido/version` en segundo plano. Si la fecha cambió, cada pantalla vuelve a descargar su contenido la próxima vez que se abre; si no, usa lo guardado en Room sin gastar datos.
+- Sin internet se muestra lo último guardado. Una sección que nunca se abrió muestra "Sin conexión" con botón de reintentar.
+- Deslizar hacia abajo en cualquier pantalla fuerza la descarga.
+- Se muestran **todos** los campos que manda la API: en una Casa, su constelación, tono emocional, idea central, coleccionables, paleta, iluminación y restauración; en un observatorio, su contenido, sonido y descubrimientos; en los diálogos, quién habla y en qué sala ocurren.
+- **Imágenes:** mientras `imagenUrl` / `iconoUrl` vengan en `null`, cada ilustración muestra un cielo estrellado propio de ese elemento con la leyenda "Ilustración pendiente". En cuanto el equipo suba la imagen a Supabase Storage y ponga su URL en la base de datos, la app la muestra sola, sin publicar otra versión.
 
-| Petición | Archivo |
-|---|---|
-| `GET /personajes` | `fake-api/personajes.json` |
-| `GET /personajes/almanaque-xii` | `fake-api/personajes/almanaque-xii.json` |
-| `GET /zonas?tipo=casa` | `fake-api/zonas.tipo-casa.json` |
+### Pruebas de contrato con la API
 
-Si cambia el seed o la forma de algún JSON, vuelve a generar los archivos y corre las pruebas:
+`app/src/test/resources/api-v1/` guarda las 60 respuestas reales de la API y `ContratoApiTest` comprueba que la app las sigue entendiendo. Cuando el equipo de la API cambie algo, actualízalas y corre las pruebas:
 
 ```bash
-python tools/fake-api/generar_fake_api.py ../astrolabio-api/database/02_seed.sql
+python tools/api/actualizar_respuestas_prueba.py
 ```
 
 ```bash
 ./gradlew testDebugUnitTest
 ```
-
-La prueba `FakeApiAssetsTest` falla si algún JSON ya no coincide con los DTO de la app.
 
 ## Estructura del proyecto
 
@@ -80,49 +70,45 @@ La prueba `FakeApiAssetsTest` falla si algún JSON ya no coincide con los DTO de
 app/src/main/java/com/equipo/wikiastrolabio/
 ├── WikiAstrolabioApp.kt      Application (Hilt + configuración de Coil)
 ├── MainActivity.kt           Splash del sistema + tema + AstrolabioApp
-├── MainViewModel.kt          Consulta /contenido/version mientras se ve el splash
+├── MainViewModel.kt          Consulta /contenido/version al abrir la app
 ├── di/                       Módulos de Hilt (red, base de datos, repositorios)
 ├── domain/                   Lógica pura de Kotlin, sin Android
-│   ├── model/                Modelos que usa la UI (Personaje, Zona, Resultado…)
+│   ├── model/                Modelos que usa la UI (Personaje, Zona, RecorridoSala…)
 │   ├── repository/           Interfaces de los repositorios
-│   └── usecase/<sección>/    Un caso de uso por operación (ObtenerPersonajesUseCase…)
+│   └── usecase/<sección>/    Un caso de uso por operación
 ├── data/                     De dónde salen los datos
-│   ├── remote/               AstrolabioApi (Retrofit), DTO y FakeApiInterceptor
+│   ├── remote/               AstrolabioApi (Retrofit) y DTO (el JSON tal como llega)
 │   ├── local/                Room (caché de respuestas) y DataStore
 │   ├── mapper/               DTO → modelo de dominio
 │   └── repository/           Implementaciones + CacheDeContenido (estrategia offline)
 └── ui/
     ├── AstrolabioApp.kt      Scaffold con la barra de navegación inferior
     ├── navigation/           Rutas, pestañas y NavHost
-    ├── theme/                Colores, tipografía y espaciados
-    ├── components/           Componentes compartidos (estados, tarjetas, imágenes…)
-    ├── common/               UiState y ContenidoViewModel
-    ├── preview/              Datos de ejemplo para las @Preview
-    └── feature/<pantalla>/   Una carpeta por pantalla: XScreen.kt, XViewModel.kt, components/
+    ├── theme/                Tokens de diseño: color, tipografía, formas y espaciado
+    ├── components/           Componentes del sistema de diseño (paneles, encabezados, filas…)
+    │   └── pixel/            Íconos y decoraciones en pixel art dibujados por código
+    ├── common/               UiState, ContenidoViewModel y colores por zona
+    ├── preview/              Datos de ejemplo SOLO para las @Preview
+    └── feature/<pantalla>/   XScreen.kt (dibuja), XViewModel.kt (estado), components/
 ```
 
-Pantallas actuales: Inicio, Historia (+ entrada), Mundo (mapa interactivo), Zonas (con pestañas de Casas), Salas, Personajes (+ ficha), Mecánicas y Archivos (+ detalle). Novedades queda fuera por ahora.
+Cada ViewModel vive junto a su pantalla en `ui/feature/<pantalla>/` (organización por funcionalidad).
 
-### Guía para UI/UX
+## Sistema de diseño
 
-Cada pantalla tiene dos funciones en `XScreen.kt`:
+La identidad visual parte del Figma del equipo de UI/UX (azul nocturno, cobre y ámbar, Pixelify Sans) y está ordenada como sistema para que todas las pantallas se vean consistentes:
 
-- **`XRoute`**: conecta el ViewModel. Normalmente no hay que tocarla.
-- **`XScreen`**: solo dibuja el estado que recibe. **Aquí va el diseño.** Tiene su `@Preview` con datos de ejemplo, así que se puede diseñar sin emulador ni API.
+| Pieza | Dónde | Regla |
+|---|---|---|
+| Color | `ui/theme/Color.kt`, `Theme.kt` | 60 % azul nocturno, 30 % pergamino, 10 % acento. El ámbar es el único color de interacción. |
+| Color por zona | `LocalAcento`, `ui/common/ColoresZona.kt` | Cada Casa tiñe su pantalla con su `tinteFondo` de la API (Géminis violeta, Acuario turquesa); el Eje es latón y el desenlace, cobre. |
+| Tipografía | `ui/theme/Type.kt` | Pixelify Sans para títulos, etiquetas y números; serif para los textos de lectura. Escala 1.25: 11 · 12 · 13 · 15 · 19 · 24 · 30 · 37. |
+| Formas | `Theme.kt` | Esquinas cortadas (como un escalón de píxel) en lugar de redondeadas. |
+| Espaciado | `ui/theme/Espaciado.kt` | Base de 4 dp, margen de pantalla de 20 dp, áreas tocables de 48 dp. |
+| Componentes | `ui/components/` | `EncabezadoPantalla`, `PanelPixel`, `EtiquetaSeccion`, `FilaIndice`, `Insignia`, `ChipEnlace`, `FichaDatos`, `CitaDestacada`, `TextoLectura`, `MarcoIlustracion`, `BloqueDialogo`, `NavegacionVecinos`, `BotonPixel` y los estados de carga y error. |
+| Íconos | `ui/components/pixel/IconosPixel.kt` | Cuadrícula de 16×16; los nuevos se dibujan con un patrón de texto (`IconoPatron`). |
 
-| Quiero cambiar… | Archivo |
-|---|---|
-| Colores | `ui/theme/Color.kt` y `Theme.kt` (no usar colores sueltos en las pantallas) |
-| Fuentes pixel | `.ttf` en `app/src/main/res/font/` + `ui/theme/Type.kt` |
-| Espaciados | `ui/theme/Espaciado.kt` |
-| Carga, error y "sin conexión" de toda la app | `ui/components/ContenidoSegunEstado.kt` |
-| Barra superior / barra inferior | `ui/components/BarraSuperior.kt` / `ui/AstrolabioApp.kt` |
-| Pestañas de la barra inferior | `ui/navigation/DestinoPrincipal.kt` |
-| Splash | `res/values/themes.xml` (`Theme.WikiAstrolabio.Splash`) |
-| Íconos y sprites | `res/drawable/` con prefijo: `ic_` íconos, `spr_` sprites, `bg_` fondos, `img_` ilustraciones |
-| Marcador de "recurso pendiente" | `res/drawable/img_recurso_pendiente.xml` |
-
-Los íconos actuales (`ic_nav_*`, `ic_atras`) y la paleta son **provisionales**.
+Para cambiar el aspecto de toda la app basta con editar los tokens del tema o los componentes: las pantallas solo los combinan. Cada pantalla y componente tiene su `@Preview` con datos de ejemplo.
 
 ## Pruebas y compilación
 
@@ -138,7 +124,7 @@ Los íconos actuales (`ic_nav_*`, `ic_atras`) y la paleta son **provisionales**.
 ./gradlew lintDebug
 ```
 
-El build **release** usa R8 (minificación y reducción de recursos) y siempre apunta a la API real.
+El build **release** usa R8 (minificación y reducción de recursos; APK de unos 2 MB) y siempre apunta a la API de producción. Falta configurar su firma (keystore fuera del repositorio).
 
 ## Solución de problemas
 
@@ -214,7 +200,7 @@ Después, abre un **Pull Request** hacia `develop` en GitHub, pide la revisión 
 
 ## Versiones
 
-Se usa versionado semántico `MAJOR.MINOR.PATCH`. La versión actual es `0.1.0` (base técnica, aún sin entregar).
+Se usa versionado semántico `MAJOR.MINOR.PATCH`. La versión actual es `0.1.0` (aún sin entregar).
 
 **Release (al terminar un sprint)**
 1. Crear `release/x.y.z` desde `develop`.

@@ -2,10 +2,12 @@ package com.equipo.wikiastrolabio.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import androidx.navigation.toRoute
 import com.equipo.wikiastrolabio.ui.feature.archivos.ArchivoDetalleRoute
 import com.equipo.wikiastrolabio.ui.feature.archivos.ArchivosRoute
 import com.equipo.wikiastrolabio.ui.feature.historia.EntradaHistoriaRoute
@@ -34,6 +36,8 @@ fun AstrolabioNavHost(
     val onAtras: () -> Unit = { navController.navigateUp() }
     val abrirArchivo: (String) -> Unit = { slug -> navController.navigate(Ruta.ArchivoDetalle(slug)) }
     val abrirSala: (String) -> Unit = { slug -> navController.navigate(Ruta.SalaDetalle(slug)) }
+    val abrirZona: (String) -> Unit = { slug -> navController.abrirZona(slug) }
+    val abrirPersonaje: (String) -> Unit = { slug -> navController.navigate(Ruta.PersonajeDetalle(slug)) }
 
     NavHost(
         navController = navController,
@@ -60,31 +64,60 @@ fun AstrolabioNavHost(
                     onEntradaClick = { slug -> navController.navigate(Ruta.EntradaHistoriaDetalle(slug)) },
                 )
             }
-            composable<Ruta.EntradaHistoriaDetalle> { EntradaHistoriaRoute(onAtras = onAtras) }
-            composable<Ruta.Personajes> {
-                PersonajesRoute(
+            composable<Ruta.EntradaHistoriaDetalle> {
+                EntradaHistoriaRoute(
                     onAtras = onAtras,
-                    onPersonajeClick = { slug -> navController.navigate(Ruta.PersonajeDetalle(slug)) },
+                    // Leer la anterior/siguiente reemplaza la entrada actual: "atrás" vuelve al índice.
+                    onEntradaClick = { slug ->
+                        navController.navigate(Ruta.EntradaHistoriaDetalle(slug)) {
+                            popUpTo<Ruta.EntradaHistoriaDetalle> { inclusive = true }
+                        }
+                    },
                 )
             }
-            composable<Ruta.PersonajeDetalle> { PersonajeDetalleRoute(onAtras = onAtras) }
+            composable<Ruta.Personajes> {
+                PersonajesRoute(onAtras = onAtras, onPersonajeClick = abrirPersonaje)
+            }
+            composable<Ruta.PersonajeDetalle> {
+                PersonajeDetalleRoute(onAtras = onAtras, onSalaClick = abrirSala)
+            }
             composable<Ruta.Mecanicas> { MecanicasRoute(onAtras = onAtras) }
         }
 
         navigation<Ruta.PestanaMundo>(startDestination = Ruta.Mundo) {
             composable<Ruta.Mundo> {
-                MundoRoute(
-                    onAtras = onAtras,
-                    onExplorarZona = { slug -> navController.navigate(Ruta.ZonaDetalle(slug)) },
-                )
+                MundoRoute(onAtras = onAtras, onExplorarZona = abrirZona)
             }
             composable<Ruta.ZonaDetalle> { ZonaRoute(onAtras = onAtras, onSalaClick = abrirSala) }
-            composable<Ruta.SalaDetalle> { SalaRoute(onAtras = onAtras, onArchivoClick = abrirArchivo) }
+            composable<Ruta.SalaDetalle> {
+                SalaRoute(
+                    onAtras = onAtras,
+                    // Pasar a la sala vecina reemplaza la actual: "atrás" vuelve a la zona.
+                    onSalaClick = { slug ->
+                        navController.navigate(Ruta.SalaDetalle(slug)) {
+                            popUpTo<Ruta.SalaDetalle> { inclusive = true }
+                        }
+                    },
+                    onZonaClick = abrirZona,
+                    onArchivoClick = abrirArchivo,
+                    onPersonajeClick = abrirPersonaje,
+                )
+            }
         }
 
         navigation<Ruta.PestanaArchivos>(startDestination = Ruta.Archivos) {
             composable<Ruta.Archivos> { ArchivosRoute(onAtras = onAtras, onArchivoClick = abrirArchivo) }
-            composable<Ruta.ArchivoDetalle> { ArchivoDetalleRoute(onAtras = onAtras, onSalaClick = abrirSala) }
+            composable<Ruta.ArchivoDetalle> {
+                ArchivoDetalleRoute(onAtras = onAtras, onZonaClick = abrirZona, onSalaClick = abrirSala)
+            }
         }
     }
+}
+
+/** Si se llegó desde esa misma zona, regresa a ella en lugar de apilar una copia. */
+private fun NavHostController.abrirZona(slug: String) {
+    val anterior = previousBackStackEntry
+    val vieneDeEsaZona = anterior?.destination?.hasRoute<Ruta.ZonaDetalle>() == true &&
+        anterior.toRoute<Ruta.ZonaDetalle>().slug == slug
+    if (vieneDeEsaZona) popBackStack() else navigate(Ruta.ZonaDetalle(slug))
 }
