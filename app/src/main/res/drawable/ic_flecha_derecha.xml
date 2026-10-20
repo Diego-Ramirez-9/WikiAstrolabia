@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Flecha pixel art (bloques de 2×2). Se tiñe desde Compose con el color de acento. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:autoMirrored="true"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M4,11h14v2H4z M12,5h2v2h-2z M14,7h2v2h-2z M16,9h2v2h-2z M18,11h2v2h-2z M16,13h2v2h-2z M14,15h2v2h-2z M12,17h2v2h-2z" />
+</vector>

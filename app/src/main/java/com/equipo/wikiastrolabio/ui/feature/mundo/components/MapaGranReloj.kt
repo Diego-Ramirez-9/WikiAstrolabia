@@ -4,22 +4,23 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -28,30 +29,30 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.equipo.wikiastrolabio.domain.model.Mapa
 import com.equipo.wikiastrolabio.domain.model.PuntoMapa
 import com.equipo.wikiastrolabio.domain.model.TipoZona
+import com.equipo.wikiastrolabio.ui.common.colorDeTipo
+import com.equipo.wikiastrolabio.ui.components.ImagenRemota
+import com.equipo.wikiastrolabio.ui.components.pixel.CampoEstelar
+import com.equipo.wikiastrolabio.ui.components.pixel.EstrellaPixel
+import com.equipo.wikiastrolabio.ui.components.pixel.RelojPixel
+import com.equipo.wikiastrolabio.ui.components.pixel.esquinasTecnicas
+import com.equipo.wikiastrolabio.ui.preview.DatosPreview
 import com.equipo.wikiastrolabio.ui.theme.Ambar400
-import com.equipo.wikiastrolabio.ui.theme.Background
-import com.equipo.wikiastrolabio.ui.theme.Cream200
-import com.equipo.wikiastrolabio.ui.theme.MutedPurple600
-import com.equipo.wikiastrolabio.ui.theme.Obsidian900
-import com.equipo.wikiastrolabio.ui.theme.PixelifySans
-import com.equipo.wikiastrolabio.ui.theme.Slate700
-import com.equipo.wikiastrolabio.ui.theme.Slate800
+import com.equipo.wikiastrolabio.ui.theme.Noche700
+import com.equipo.wikiastrolabio.ui.theme.Noche800
+import com.equipo.wikiastrolabio.ui.theme.WikiAstrolabioTheme
 
-private val TamanoMarcador = 46.dp
+private val TamanoMarcador = 48.dp
 
 /**
- * Mapa del Gran Reloj Cósmico rediseñado fielmente según el prototipo de Figma:
- * - Marco perimetral escalonado pixel art con esquinas técnicas de astrolabio.
- * - Guías de coordenadas concéntricas y ejes punteados.
- * - 6 marcadores con estrellas pixel art doradas/grises y numeración 01-06.
- * - Leyenda "GRAN RELOJ CÓSMICO" en la esquina inferior izquierda.
+ * Mapa del Gran Reloj. Cada [PuntoMapa] trae x/y de 0 a 1 relativos al mapa, así que el
+ * marcador se coloca en (x · ancho, y · alto) en cualquier pantalla. Mientras no exista la
+ * imagen del mapa en la API, se dibuja el plano técnico del Reloj (diseño del equipo de UI/UX)
+ * con las líneas del mecanismo que unen el Eje con cada lugar.
  */
 @Composable
 fun MapaGranReloj(
@@ -60,215 +61,130 @@ fun MapaGranReloj(
     onPuntoClick: (PuntoMapa) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    // Definición de las 6 posiciones fijas del Gran Reloj (en coordenadas relativas 0f..1f)
-    // 01: Superior, 02: Inferior, 03: Izquierda (Géminis), 04: Derecha (Acuario), 05: Superior derecha, 06: Centro
-    val posiciones = listOf(
-        CoordenadaMarcador(numero = "01", x = 0.50f, y = 0.16f, slugFallback = "aries", esCentro = false),
-        CoordenadaMarcador(numero = "02", x = 0.50f, y = 0.83f, slugFallback = "entranas", esCentro = false),
-        CoordenadaMarcador(numero = "03", x = 0.22f, y = 0.50f, slugFallback = "geminis", esCentro = false),
-        CoordenadaMarcador(numero = "04", x = 0.78f, y = 0.50f, slugFallback = "acuario", esCentro = false),
-        CoordenadaMarcador(numero = "05", x = 0.72f, y = 0.28f, slugFallback = "casa-05", esCentro = false),
-        CoordenadaMarcador(numero = "06", x = 0.50f, y = 0.50f, slugFallback = "camara-central", esCentro = true),
-    )
-
-    Box(
+    val forma = MaterialTheme.shapes.large
+    BoxWithConstraints(
         modifier = modifier
-            .aspectRatio(0.96f)
-            .background(Background, RoundedCornerShape(4.dp))
-            .border(BorderStroke(1.dp, Slate800), RoundedCornerShape(4.dp)),
+            .fillMaxWidth()
+            .aspectRatio(1f)
+            .clip(forma)
+            .background(MaterialTheme.colorScheme.surfaceContainerLowest)
+            .border(1.dp, MaterialTheme.colorScheme.outlineVariant, forma)
+            .esquinasTecnicas(Ambar400.copy(alpha = 0.5f)),
     ) {
-        // Fondo técnico del Gran Reloj: perímetro escalonado y cuadrícula astronómica
-        Canvas(modifier = Modifier.fillMaxSize()) {
-            val w = size.width
-            val h = size.height
-            val cx = w * 0.5f
-            val cy = h * 0.5f
-
-            val strokeSolido = Stroke(width = 1.2f)
-            val strokePunteado = Stroke(
-                width = 1.2f,
-                pathEffect = PathEffect.dashPathEffect(floatArrayOf(5f, 5f), 0f),
-            )
-
-            // 1. Ejes principales de coordenadas (cruz punteada)
-            drawLine(Slate700, Offset(w * 0.18f, cy), Offset(w * 0.82f, cy), strokeWidth = 1f, pathEffect = strokePunteado.pathEffect)
-            drawLine(Slate700, Offset(cx, h * 0.14f), Offset(cx, h * 0.86f), strokeWidth = 1f, pathEffect = strokePunteado.pathEffect)
-
-            // 2. Cuadrícula concéntrica exterior (cuadrado punteado)
-            val tamCuadradoExt = w * 0.62f
-            drawRect(
-                color = Slate700,
-                topLeft = Offset(cx - tamCuadradoExt / 2, cy - tamCuadradoExt / 2),
-                size = androidx.compose.ui.geometry.Size(tamCuadradoExt, tamCuadradoExt),
-                style = strokePunteado,
-            )
-
-            // 3. Cuadrícula concéntrica interior (alrededor del centro 06)
-            val tamCuadradoInt = w * 0.36f
-            drawRect(
-                color = Slate700,
-                topLeft = Offset(cx - tamCuadradoInt / 2, cy - tamCuadradoInt / 2),
-                size = androidx.compose.ui.geometry.Size(tamCuadradoInt, tamCuadradoInt),
-                style = strokePunteado,
-            )
-
-            // 4. Perímetro escalonado cósmico pixel art (forma de astrolabio)
-            val perimetro = Path().apply {
-                // Arriba
-                moveTo(cx - w * 0.16f, h * 0.08f)
-                lineTo(cx + w * 0.16f, h * 0.08f)
-                lineTo(cx + w * 0.16f, h * 0.12f)
-                lineTo(cx + w * 0.28f, h * 0.12f)
-                lineTo(cx + w * 0.28f, h * 0.18f)
-                lineTo(cx + w * 0.38f, h * 0.18f)
-                // Derecha
-                lineTo(cx + w * 0.38f, cy - h * 0.16f)
-                lineTo(cx + w * 0.44f, cy - h * 0.16f)
-                lineTo(cx + w * 0.44f, cy + h * 0.16f)
-                lineTo(cx + w * 0.38f, cy + h * 0.16f)
-                lineTo(cx + w * 0.38f, cy + h * 0.28f)
-                lineTo(cx + w * 0.28f, cy + h * 0.28f)
-                // Abajo
-                lineTo(cx + w * 0.28f, h * 0.88f)
-                lineTo(cx + w * 0.16f, h * 0.88f)
-                lineTo(cx + w * 0.16f, h * 0.92f)
-                lineTo(cx - w * 0.16f, h * 0.92f)
-                lineTo(cx - w * 0.16f, h * 0.88f)
-                lineTo(cx - w * 0.28f, h * 0.88f)
-                lineTo(cx - w * 0.28f, cy + h * 0.28f)
-                lineTo(cx - w * 0.38f, cy + h * 0.28f)
-                // Izquierda
-                lineTo(cx - w * 0.38f, cy + h * 0.16f)
-                lineTo(cx - w * 0.44f, cy + h * 0.16f)
-                lineTo(cx - w * 0.44f, cy - h * 0.16f)
-                lineTo(cx - w * 0.38f, cy - h * 0.16f)
-                lineTo(cx - w * 0.38f, h * 0.18f)
-                lineTo(cx - w * 0.28f, h * 0.18f)
-                lineTo(cx - w * 0.28f, h * 0.12f)
-                lineTo(cx - w * 0.16f, h * 0.12f)
-                close()
-            }
-            drawPath(perimetro, color = Slate800, style = strokeSolido)
+        ImagenRemota(url = mapa.imagenUrl, descripcion = mapa.titulo, modifier = Modifier.fillMaxSize()) {
+            CampoEstelar(semilla = "gran-reloj", acento = Ambar400, modifier = Modifier.fillMaxSize().alpha(0.7f))
+            PlanoDelReloj(mapa.puntos, Modifier.fillMaxSize())
         }
-
-        // 5. Marcadores 01 a 06 posicionados
-        BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
-            posiciones.forEach { pos ->
-                // Buscar si existe un PuntoMapa asociado en los datos reales del mapa
-                val punto = mapa.puntos.firstOrNull { it.slug == pos.slugFallback }
-                    ?: mapa.puntos.firstOrNull {
-                        when (pos.numero) {
-                            "02" -> it.tipo == TipoZona.EJE
-                            "03" -> it.slug.contains("geminis")
-                            "04" -> it.slug.contains("acuario")
-                            "06" -> it.tipo == TipoZona.CIERRE
-                            else -> false
-                        }
-                    }
-                    ?: PuntoMapa(
-                        slug = pos.slugFallback,
-                        nombre = when (pos.numero) {
-                            "01" -> "Casa de Aries"
-                            "02" -> "Las Entrañas del Reloj"
-                            "03" -> "Casa de Géminis"
-                            "04" -> "Casa de Acuario"
-                            "05" -> "Casa de Tauro"
-                            else -> "La Cámara Central"
-                        },
-                        subtitulo = if (pos.numero in listOf("01", "03", "04", "05")) "Casa del Zodiaco" else "Zona del Reloj",
-                        tipo = if (pos.numero in listOf("01", "03", "04", "05")) TipoZona.CASA else if (pos.numero == "02") TipoZona.EJE else TipoZona.CIERRE,
-                        resumen = null,
-                        x = pos.x,
-                        y = pos.y,
-                    )
-
-                val seleccionado = punto.slug == slugSeleccionado || (slugSeleccionado == null && pos.numero == "03")
-
-                MarcadorFigma(
-                    numero = pos.numero,
-                    seleccionado = seleccionado,
-                    esCentro = pos.esCentro,
-                    onClick = { onPuntoClick(punto) },
-                    modifier = Modifier.offset(
-                        x = maxWidth * pos.x - TamanoMarcador / 2,
-                        y = maxHeight * pos.y - TamanoMarcador / 2,
-                    ),
-                )
-            }
+        mapa.puntos.forEachIndexed { indice, punto ->
+            Marcador(
+                numero = indice + 1,
+                punto = punto,
+                seleccionado = punto.slug == slugSeleccionado,
+                onClick = { onPuntoClick(punto) },
+                modifier = Modifier.offset(
+                    x = maxWidth * punto.x - TamanoMarcador / 2,
+                    y = maxHeight * punto.y - TamanoMarcador / 2,
+                ),
+            )
         }
-
-        // 6. Leyenda "GRAN RELOJ CÓSMICO" abajo a la izquierda
-        Text(
-            text = "GRAN RELOJ CÓSMICO",
-            style = MaterialTheme.typography.labelSmall.copy(
-                fontFamily = PixelifySans,
-                fontSize = 9.sp,
-                letterSpacing = 1.sp,
-            ),
-            color = Cream200.copy(alpha = 0.8f),
-            modifier = Modifier
-                .align(Alignment.BottomStart)
-                .padding(start = 12.dp, bottom = 10.dp),
-        )
     }
 }
 
-private data class CoordenadaMarcador(
-    val numero: String,
-    val x: Float,
-    val y: Float,
-    val slugFallback: String,
-    val esCentro: Boolean,
-)
-
-/**
- * Marcador visual individual según el diseño de Figma:
- * - Recuadro cuadrado con fondo oscuro o violeta/ámbar al seleccionarse.
- * - Estrella dorada o gris pixel art (o reloj si es el centro).
- * - Número "01"-"06" en la esquina inferior derecha.
- */
+/** Plano técnico: marco escalonado, anillos y ejes punteados, y el mecanismo hacia cada lugar. */
 @Composable
-private fun MarcadorFigma(
-    numero: String,
+private fun PlanoDelReloj(puntos: List<PuntoMapa>, modifier: Modifier) {
+    Canvas(modifier = modifier) {
+        val w = size.width
+        val h = size.height
+        val cx = w * 0.5f
+        val cy = h * 0.5f
+        val punteado = PathEffect.dashPathEffect(floatArrayOf(5f, 5f), 0f)
+        val fino = Stroke(width = 1.2f)
+
+        drawLine(Noche700, Offset(w * 0.12f, cy), Offset(w * 0.88f, cy), strokeWidth = 1f, pathEffect = punteado)
+        drawLine(Noche700, Offset(cx, h * 0.08f), Offset(cx, h * 0.92f), strokeWidth = 1f, pathEffect = punteado)
+        drawCircle(Noche700, radius = w * 0.34f, center = Offset(cx, cy), style = Stroke(1f, pathEffect = punteado))
+        drawCircle(Noche800, radius = w * 0.18f, center = Offset(cx, cy), style = fino)
+
+        // Marco escalonado en forma de astrolabio.
+        val marco = Path().apply {
+            moveTo(cx - w * 0.14f, h * 0.04f)
+            lineTo(cx + w * 0.14f, h * 0.04f); lineTo(cx + w * 0.14f, h * 0.09f)
+            lineTo(cx + w * 0.27f, h * 0.09f); lineTo(cx + w * 0.27f, h * 0.16f)
+            lineTo(cx + w * 0.38f, h * 0.16f); lineTo(cx + w * 0.38f, cy - h * 0.15f)
+            lineTo(cx + w * 0.46f, cy - h * 0.15f); lineTo(cx + w * 0.46f, cy + h * 0.15f)
+            lineTo(cx + w * 0.38f, cy + h * 0.15f); lineTo(cx + w * 0.38f, cy + h * 0.34f)
+            lineTo(cx + w * 0.27f, cy + h * 0.34f); lineTo(cx + w * 0.27f, h * 0.91f)
+            lineTo(cx + w * 0.14f, h * 0.91f); lineTo(cx + w * 0.14f, h * 0.96f)
+            lineTo(cx - w * 0.14f, h * 0.96f); lineTo(cx - w * 0.14f, h * 0.91f)
+            lineTo(cx - w * 0.27f, h * 0.91f); lineTo(cx - w * 0.27f, cy + h * 0.34f)
+            lineTo(cx - w * 0.38f, cy + h * 0.34f); lineTo(cx - w * 0.38f, cy + h * 0.15f)
+            lineTo(cx - w * 0.46f, cy + h * 0.15f); lineTo(cx - w * 0.46f, cy - h * 0.15f)
+            lineTo(cx - w * 0.38f, cy - h * 0.15f); lineTo(cx - w * 0.38f, h * 0.16f)
+            lineTo(cx - w * 0.27f, h * 0.16f); lineTo(cx - w * 0.27f, h * 0.09f)
+            lineTo(cx - w * 0.14f, h * 0.09f)
+            close()
+        }
+        drawPath(marco, color = Noche800, style = Stroke(width = 1.5f))
+
+        // El mecanismo: del centro del Reloj a cada lugar.
+        puntos.forEach { punto ->
+            drawLine(
+                color = colorDeTipo(punto.tipo).copy(alpha = 0.35f),
+                start = Offset(cx, cy),
+                end = Offset(w * punto.x, h * punto.y),
+                strokeWidth = 1.5f,
+                pathEffect = PathEffect.dashPathEffect(floatArrayOf(2f, 6f), 0f),
+            )
+        }
+        drawCircle(Ambar400.copy(alpha = 0.8f), radius = 4f, center = Offset(cx, cy))
+    }
+}
+
+@Composable
+private fun Marcador(
+    numero: Int,
+    punto: PuntoMapa,
     seleccionado: Boolean,
-    esCentro: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val fondo = if (seleccionado) Color(0xFF2C2F48) else Obsidian900
-    val borde = if (seleccionado) Ambar400 else Slate800
-
-    Box(
+    val color = colorDeTipo(punto.tipo)
+    Surface(
+        onClick = onClick,
+        shape = MaterialTheme.shapes.small,
+        color = if (seleccionado) color.copy(alpha = 0.22f) else MaterialTheme.colorScheme.surfaceContainerLow,
+        border = BorderStroke(if (seleccionado) 2.dp else 1.dp, if (seleccionado) color else color.copy(alpha = 0.45f)),
         modifier = modifier
             .size(TamanoMarcador)
-            .background(fondo, RoundedCornerShape(2.dp))
-            .border(BorderStroke(1.dp, borde), RoundedCornerShape(2.dp))
-            .clickable(onClick = onClick)
             .semantics {
-                contentDescription = "Marcador $numero"
+                contentDescription = punto.nombre
                 role = Role.Button
                 selected = seleccionado
             },
-        contentAlignment = Alignment.Center,
     ) {
-        // Ícono central: Estrella o Reloj
-        if (esCentro) {
-            RelojPixel(seleccionada = seleccionado, tamano = 22.dp)
-        } else {
-            EstrellaPixel(seleccionada = seleccionado, tamano = 22.dp)
+        Box(contentAlignment = Alignment.Center) {
+            if (punto.tipo == TipoZona.CIERRE) {
+                RelojPixel(color = color, tamano = 24.dp)
+            } else {
+                EstrellaPixel(seleccionada = seleccionado, color = color, tamano = 24.dp)
+            }
+            Text(
+                text = numero.toString().padStart(2, '0'),
+                style = MaterialTheme.typography.labelSmall,
+                color = if (seleccionado) color else MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(end = 3.dp, bottom = 1.dp),
+            )
         }
+    }
+}
 
-        // Número en la esquina inferior derecha
-        Text(
-            text = numero,
-            style = MaterialTheme.typography.labelSmall.copy(
-                fontFamily = PixelifySans,
-                fontSize = 8.5.sp,
-            ),
-            color = if (seleccionado) Ambar400 else Cream200.copy(alpha = 0.7f),
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(end = 3.dp, bottom = 2.dp),
-        )
+@Preview
+@Composable
+private fun MapaGranRelojPreview() {
+    WikiAstrolabioTheme {
+        MapaGranReloj(mapa = DatosPreview.mapa, slugSeleccionado = "geminis", onPuntoClick = {})
     }
 }

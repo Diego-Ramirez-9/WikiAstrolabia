@@ -1,11 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Flecha pixel art hacia atrás (bloques de 2×2). Se tiñe desde Compose. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
     android:height="24dp"
     android:autoMirrored="true"
     android:viewportWidth="24"
     android:viewportHeight="24">
-    <!-- Flecha izquierda pixel art en color terracota/ámbar -->
     <path
-        android:fillColor="#FFFFAA5E"
-        android:pathData="M10,6h2v2h-2zM8,8h2v2H8zM6,10h2v2H6zM4,12h2v2H4zM6,14h2v2H6zM8,16h2v2H8zM10,18h2v2h-2zM12,11h8v4h-8z" />
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M6,11h14v2H6z M10,5h2v2h-2z M8,7h2v2H8z M6,9h2v2H6z M4,11h2v2H4z M6,13h2v2H6z M8,15h2v2H8z M10,17h2v2h-2z" />
 </vector>

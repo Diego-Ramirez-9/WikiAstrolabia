@@ -20,3 +20,12 @@ data class SeccionResumen(
     val slug: String,
     val titulo: String,
 )
+
+/** Una entrada lista para leer, con su capítulo y las entradas vecinas para seguir leyendo. */
+data class LecturaHistoria(
+    val entrada: EntradaHistoria,
+    /** Posición del capítulo (1, 2, 3…) o null si no se pudo consultar el índice. */
+    val numeroCapitulo: Int?,
+    val anterior: EntradaHistoria?,
+    val siguiente: EntradaHistoria?,
+)

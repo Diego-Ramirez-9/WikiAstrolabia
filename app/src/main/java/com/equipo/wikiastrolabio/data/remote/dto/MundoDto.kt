@@ -41,12 +41,22 @@ data class ZonaDto(
     val subtitulo: String? = null,
     val tipo: String = "",
     val constelacion: ConstelacionDto? = null,
+    val esNivel: Boolean = true,
+    val esTutorial: Boolean = false,
     val etiquetas: List<String> = emptyList(),
     val resumen: String? = null,
+    val tonoEmocional: String? = null,
+    val ideaCentral: String? = null,
     val exterior: String? = null,
     val ambientacion: String? = null,
     val narrativa: String? = null,
     val restauracion: String? = null,
+    val coleccionables: String? = null,
+    val paleta: String? = null,
+    val iluminacion: String? = null,
+    val sensacionVisual: String? = null,
+    /** Nombre del color de la Casa ("violeta", "turquesa"…). */
+    val tinteFondo: String? = null,
     val imagenUrl: String? = null,
     val salas: List<SalaResumenDto> = emptyList(),
     val mecanicas: List<MecanicaZonaDto> = emptyList(),
@@ -79,6 +89,7 @@ data class MecanicaZonaDto(
 data class SalaDto(
     val slug: String,
     val nombre: String,
+    val orden: Int = 0,
     val descripcion: String? = null,
     val aprendizaje: String? = null,
     val esZonaSegura: Boolean = false,
@@ -91,11 +102,17 @@ data class SalaDto(
 
 @Serializable
 data class ObservatorioDto(
+    val slug: String = "",
     val nombre: String,
+    val ubicacion: String? = null,
+    val resumen: String? = null,
     val exterior: String? = null,
     val interior: String? = null,
     val luz: String? = null,
+    val audio: String? = null,
     val descubrimientos: String? = null,
+    val contenidoBreve: String? = null,
+    val imagenUrl: String? = null,
 )
 
 @Serializable
