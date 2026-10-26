@@ -54,7 +54,7 @@ API_BASE_URL=https://otro-despliegue.vercel.app/api/v1/
 
 ### Pruebas de contrato con la API
 
-`app/src/test/resources/api-v1/` guarda las 60 respuestas reales de la API y `ContratoApiTest` comprueba que la app las sigue entendiendo. Cuando el equipo de la API cambie algo, actualízalas y corre las pruebas:
+`app/src/test/resources/api-v1/` guarda las 59 respuestas reales de la API que usa la app y `ContratoApiTest` comprueba que la app las sigue entendiendo. Cuando el equipo de la API cambie algo, actualízalas y corre las pruebas:
 
 ```bash
 python tools/api/actualizar_respuestas_prueba.py

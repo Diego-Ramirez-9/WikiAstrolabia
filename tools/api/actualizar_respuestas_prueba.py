@@ -41,7 +41,7 @@ def descargar(ruta: str) -> dict:
 def main():
     if SALIDA.exists():
         shutil.rmtree(SALIDA)
-    for ruta in ["salud", "contenido/version", "mapa", "mecanicas",
+    for ruta in ["contenido/version", "mapa", "mecanicas",
                  "zonas?tipo=eje", "zonas?tipo=casa", "zonas?tipo=cierre"]:
         descargar(ruta)
 
