@@ -10,7 +10,6 @@ import com.equipo.wikiastrolabio.data.remote.dto.PersonajeDto
 import com.equipo.wikiastrolabio.data.remote.dto.PersonajeResumenDto
 import com.equipo.wikiastrolabio.data.remote.dto.RespuestaApi
 import com.equipo.wikiastrolabio.data.remote.dto.SalaDto
-import com.equipo.wikiastrolabio.data.remote.dto.SaludDto
 import com.equipo.wikiastrolabio.data.remote.dto.SeccionHistoriaDto
 import com.equipo.wikiastrolabio.data.remote.dto.VersionContenidoDto
 import com.equipo.wikiastrolabio.data.remote.dto.ZonaDto
@@ -42,7 +41,6 @@ class ContratoApiTest {
 
     @Test
     fun `los listados se leen y se convierten a dominio`() {
-        assertEquals("ok", leer<SaludDto>("salud").estado)
         assertTrue(leer<VersionContenidoDto>("contenido/version").actualizadoEn.isNotBlank())
         assertTrue(leer<List<SeccionHistoriaDto>>("historia").map { it.aDominio() }.isNotEmpty())
         assertTrue(leer<MapaDto>("mapa").aDominio().puntos.isNotEmpty())

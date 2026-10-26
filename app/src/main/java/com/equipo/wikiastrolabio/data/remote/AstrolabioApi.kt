@@ -9,7 +9,6 @@ import com.equipo.wikiastrolabio.data.remote.dto.PersonajeDto
 import com.equipo.wikiastrolabio.data.remote.dto.PersonajeResumenDto
 import com.equipo.wikiastrolabio.data.remote.dto.RespuestaApi
 import com.equipo.wikiastrolabio.data.remote.dto.SalaDto
-import com.equipo.wikiastrolabio.data.remote.dto.SaludDto
 import com.equipo.wikiastrolabio.data.remote.dto.SeccionHistoriaDto
 import com.equipo.wikiastrolabio.data.remote.dto.VersionContenidoDto
 import com.equipo.wikiastrolabio.data.remote.dto.ZonaDto
@@ -25,9 +24,6 @@ import retrofit2.http.Query
  * Los errores HTTP llegan como HttpException; CacheDeContenido los traduce a ErrorDatos.
  */
 interface AstrolabioApi {
-
-    @GET("salud")
-    suspend fun salud(): RespuestaApi<SaludDto>
 
     @GET("contenido/version")
     suspend fun versionContenido(): RespuestaApi<VersionContenidoDto>
