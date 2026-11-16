@@ -68,8 +68,10 @@ fun EntradaHistoriaScreen(
         },
     ) { lectura ->
         val entrada = lectura.entrada
-        item(key = "ilustracion") {
-            MarcoIlustracion(url = entrada.imagenUrl, descripcion = entrada.titulo, semilla = entrada.slug)
+        if (!entrada.imagenUrl.isNullOrBlank()) {
+            item(key = "ilustracion") {
+                MarcoIlustracion(url = entrada.imagenUrl, descripcion = entrada.titulo, semilla = entrada.slug)
+            }
         }
         item(key = "texto") {
             TextoLectura(entrada.contenido, capitular = true, modifier = Modifier.padding(top = Espaciado.s))

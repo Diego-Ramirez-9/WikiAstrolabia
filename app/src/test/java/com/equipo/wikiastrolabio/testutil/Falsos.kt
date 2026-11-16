@@ -21,8 +21,6 @@ class CacheRespuestaDaoFalso : CacheRespuestaDao {
     override suspend fun eliminar(clave: String) {
         filas.remove(clave)
     }
-
-    override suspend fun vaciar() = filas.clear()
 }
 
 /** DataStore en memoria (sin archivos) para PreferenciasContenido. */

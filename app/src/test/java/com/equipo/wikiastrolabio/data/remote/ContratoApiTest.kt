@@ -4,20 +4,14 @@ import com.equipo.wikiastrolabio.data.mapper.aDominio
 import com.equipo.wikiastrolabio.data.remote.dto.ArchivoDto
 import com.equipo.wikiastrolabio.data.remote.dto.CategoriaArchivoDto
 import com.equipo.wikiastrolabio.data.remote.dto.EntradaHistoriaDto
-import com.equipo.wikiastrolabio.data.remote.dto.MapaDto
 import com.equipo.wikiastrolabio.data.remote.dto.MecanicasDto
 import com.equipo.wikiastrolabio.data.remote.dto.PersonajeDto
 import com.equipo.wikiastrolabio.data.remote.dto.PersonajeResumenDto
 import com.equipo.wikiastrolabio.data.remote.dto.RespuestaApi
-import com.equipo.wikiastrolabio.data.remote.dto.SalaDto
 import com.equipo.wikiastrolabio.data.remote.dto.SeccionHistoriaDto
 import com.equipo.wikiastrolabio.data.remote.dto.VersionContenidoDto
-import com.equipo.wikiastrolabio.data.remote.dto.ZonaDto
-import com.equipo.wikiastrolabio.data.remote.dto.ZonaResumenDto
 import com.equipo.wikiastrolabio.di.RedModule
-import com.equipo.wikiastrolabio.domain.model.TipoZona
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.io.File
@@ -43,40 +37,23 @@ class ContratoApiTest {
     fun `los listados se leen y se convierten a dominio`() {
         assertTrue(leer<VersionContenidoDto>("contenido/version").actualizadoEn.isNotBlank())
         assertTrue(leer<List<SeccionHistoriaDto>>("historia").map { it.aDominio() }.isNotEmpty())
-        assertTrue(leer<MapaDto>("mapa").aDominio().puntos.isNotEmpty())
-        assertTrue(leer<List<ZonaResumenDto>>("zonas").map { it.aDominio() }.isNotEmpty())
         assertTrue(leer<List<PersonajeResumenDto>>("personajes").map { it.aDominio() }.isNotEmpty())
         assertTrue(leer<MecanicasDto>("mecanicas").aDominio().jugables.isNotEmpty())
         assertTrue(leer<List<CategoriaArchivoDto>>("archivos").map { it.aDominio() }.isNotEmpty())
     }
 
     @Test
-    fun `el filtro por tipo de zona devuelve solo ese tipo`() {
-        val casas = leer<List<ZonaResumenDto>>("zonas.tipo-casa").map { it.aDominio() }
-        assertTrue(casas.isNotEmpty())
-        assertTrue(casas.all { it.tipo == TipoZona.CASA })
-    }
-
-    @Test
     fun `los detalles se leen y se convierten a dominio`() {
         slugsEn("historia").forEach { leer<EntradaHistoriaDto>("historia/$it").aDominio() }
-        slugsEn("zonas").forEach { leer<ZonaDto>("zonas/$it").aDominio() }
-        slugsEn("salas").forEach { leer<SalaDto>("salas/$it").aDominio() }
         slugsEn("personajes").forEach { leer<PersonajeDto>("personajes/$it").aDominio() }
         slugsEn("archivos").forEach { leer<ArchivoDto>("archivos/$it").aDominio() }
     }
 
     @Test
     fun `los campos nuevos de la API llegan al dominio`() {
-        val geminis = leer<ZonaDto>("zonas/geminis").aDominio()
-        assertEquals("violeta", geminis.tinte)
-        assertTrue(!geminis.paleta.isNullOrBlank())
-
-        val observatorio = slugsEn("salas")
-            .map { leer<SalaDto>("salas/$it").aDominio() }
-            .first { it.observatorio != null }
-        assertNotEquals(0, observatorio.orden)
-        assertTrue(!observatorio.observatorio?.contenidoBreve.isNullOrBlank())
+        // Ilustración de cada capítulo (API 1.1.0).
+        val capitulos = leer<List<SeccionHistoriaDto>>("historia").map { it.aDominio() }
+        assertTrue(capitulos.all { !it.imagenUrl.isNullOrBlank() })
 
         val dialogos = leer<PersonajeDto>("personajes/efemeride").aDominio().dialogos
         assertTrue(dialogos.isNotEmpty())
@@ -87,8 +64,6 @@ class ContratoApiTest {
     fun `cada enlace de una lista tiene su detalle`() {
         val faltantes = buildList {
             leer<List<SeccionHistoriaDto>>("historia").flatMap { it.entradas }.forEach { add("historia/${it.slug}") }
-            leer<MapaDto>("mapa").puntos.forEach { add("zonas/${it.slug}") }
-            slugsEn("zonas").flatMap { leer<ZonaDto>("zonas/$it").salas }.forEach { add("salas/${it.slug}") }
             leer<List<PersonajeResumenDto>>("personajes").forEach { add("personajes/${it.slug}") }
             leer<List<CategoriaArchivoDto>>("archivos").flatMap { it.elementos }.forEach { add("archivos/${it.slug}") }
         }.filterNot { File(carpeta, "$it.json").isFile }

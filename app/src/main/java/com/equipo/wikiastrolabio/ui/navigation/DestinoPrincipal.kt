@@ -21,7 +21,7 @@ enum class DestinoPrincipal(
     @param:DrawableRes val icono: Int,
 ) {
     INICIO(Ruta.PestanaInicio, Ruta.Inicio, R.string.nav_inicio, R.drawable.ic_nav_inicio),
-    MUNDO(Ruta.PestanaMundo, Ruta.Mundo, R.string.nav_mundo, R.drawable.ic_nav_mundo),
+    HISTORIA(Ruta.PestanaHistoria, Ruta.Historia, R.string.nav_historia, R.drawable.ic_nav_historia),
     ARCHIVOS(Ruta.PestanaArchivos, Ruta.Archivos, R.string.nav_archivos, R.drawable.ic_nav_archivos),
 }
 
@@ -42,8 +42,8 @@ fun NavController.tocarPestana(destino: DestinoPrincipal) {
 }
 
 /**
- * Cambia de pestaña conservando la pila de cada una (si estabas en una sala dentro de
- * Mundo, al volver a Mundo regresas a esa sala).
+ * Cambia de pestaña conservando la pila de cada una (si estabas leyendo una entrada de
+ * Historia, al volver a Historia regresas a esa entrada).
  */
 fun NavController.navegarAPestana(destino: DestinoPrincipal) {
     navigate(destino.ruta) {

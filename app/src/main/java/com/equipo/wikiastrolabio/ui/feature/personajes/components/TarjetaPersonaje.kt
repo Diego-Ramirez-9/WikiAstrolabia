@@ -41,7 +41,6 @@ fun TarjetaPersonaje(
                 descripcion = personaje.nombre,
                 semilla = personaje.slug,
                 relacionAspecto = 0.8f,
-                mostrarLeyenda = false,
                 modifier = Modifier.width(96.dp),
             )
             Column(

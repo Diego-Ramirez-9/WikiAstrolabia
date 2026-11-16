@@ -36,7 +36,7 @@ class CacheDeContenido @Inject constructor(
     @param:DispatcherIo private val dispatcherIo: CoroutineDispatcher,
 ) {
 
-    /** Versión con el serializador deducido del tipo: `cache.obtener<MapaDto>("mapa", forzarRed) { api.mapa().data }`. */
+    /** Versión con el serializador deducido del tipo: `cache.obtener<MecanicasDto>("mecanicas", forzarRed) { api.mecanicas().data }`. */
     suspend inline fun <reified T> obtener(
         clave: String,
         forzarRed: Boolean,

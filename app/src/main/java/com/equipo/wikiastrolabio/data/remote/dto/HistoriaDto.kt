@@ -2,11 +2,13 @@ package com.equipo.wikiastrolabio.data.remote.dto
 
 import kotlinx.serialization.Serializable
 
-/** Elemento de GET /historia. */
+/** Elemento de GET /historia: un capítulo con su ilustración y sus entradas. */
 @Serializable
 data class SeccionHistoriaDto(
     val slug: String,
     val titulo: String,
+    /** Ilustración del capítulo (API 1.1.0); null mientras no tenga. */
+    val imagenUrl: String? = null,
     val entradas: List<EntradaHistoriaDto> = emptyList(),
 )
 

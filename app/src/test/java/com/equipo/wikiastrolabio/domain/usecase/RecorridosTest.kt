@@ -2,26 +2,17 @@ package com.equipo.wikiastrolabio.domain.usecase
 
 import com.equipo.wikiastrolabio.domain.model.EntradaHistoria
 import com.equipo.wikiastrolabio.domain.model.ErrorDatos
-import com.equipo.wikiastrolabio.domain.model.Mapa
 import com.equipo.wikiastrolabio.domain.model.OrigenDatos
-import com.equipo.wikiastrolabio.domain.model.Referencia
 import com.equipo.wikiastrolabio.domain.model.Resultado
-import com.equipo.wikiastrolabio.domain.model.Sala
-import com.equipo.wikiastrolabio.domain.model.SalaResumen
 import com.equipo.wikiastrolabio.domain.model.SeccionHistoria
-import com.equipo.wikiastrolabio.domain.model.TipoZona
-import com.equipo.wikiastrolabio.domain.model.Zona
-import com.equipo.wikiastrolabio.domain.model.ZonaResumen
 import com.equipo.wikiastrolabio.domain.repository.HistoriaRepository
-import com.equipo.wikiastrolabio.domain.repository.MundoRepository
 import com.equipo.wikiastrolabio.domain.usecase.historia.ObtenerEntradaHistoriaUseCase
-import com.equipo.wikiastrolabio.domain.usecase.mundo.ObtenerSalaUseCase
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
 
-/** Lógica de "anterior / siguiente" de la Historia y del recorrido de salas. */
+/** Lógica de "anterior / siguiente" de la Historia. */
 class RecorridosTest {
 
     private fun entrada(slug: String) = EntradaHistoria(slug, slug, "…", null)
@@ -66,48 +57,5 @@ class RecorridosTest {
         assertNull(resultado.datos.siguiente)
         assertNull(resultado.datos.numeroCapitulo)
         assertEquals(OrigenDatos.CACHE, resultado.origen)
-    }
-
-    private fun salaResumen(orden: Int) = SalaResumen("sala-$orden", "Sala $orden", orden, esZonaSegura = false, esObservatorio = false)
-
-    private class MundoFalso(private val zona: Zona?) : MundoRepository {
-        override suspend fun obtenerMapa(forzarRed: Boolean): Resultado<Mapa> = error("No se usa")
-        override suspend fun obtenerZonas(tipo: TipoZona?, forzarRed: Boolean): Resultado<List<ZonaResumen>> = error("No se usa")
-        override suspend fun obtenerZona(slug: String, forzarRed: Boolean) =
-            zona?.let { Resultado.Exito(it, OrigenDatos.RED) } ?: Resultado.Error(ErrorDatos.SinConexion)
-
-        override suspend fun obtenerSala(slug: String, forzarRed: Boolean) = Resultado.Exito(
-            Sala(slug, slug, 2, null, null, false, null, Referencia("geminis", "Casa de Géminis"), null, emptyList(), emptyList()),
-            OrigenDatos.RED,
-        )
-    }
-
-    private fun zonaCon(salas: List<SalaResumen>) = Zona(
-        slug = "geminis", nombre = "Casa de Géminis", subtitulo = null, tipo = TipoZona.CASA, constelacion = null,
-        esNivel = true, esTutorial = false, etiquetas = emptyList(), resumen = null, tonoEmocional = null,
-        ideaCentral = null, exterior = null, ambientacion = null, narrativa = null, restauracion = null,
-        coleccionables = null, paleta = null, iluminacion = null, sensacionVisual = null, tinte = "violeta",
-        imagenUrl = null, salas = salas, mecanicas = emptyList(),
-    )
-
-    @Test
-    fun `una sala conoce a sus vecinas, el total y el tinte de su zona`() = runTest {
-        val salas = (1..3).map(::salaResumen)
-        val recorrido = (ObtenerSalaUseCase(MundoFalso(zonaCon(salas)))("sala-2") as Resultado.Exito).datos
-
-        assertEquals("sala-1", recorrido.anterior?.slug)
-        assertEquals("sala-3", recorrido.siguiente?.slug)
-        assertEquals(3, recorrido.total)
-        assertEquals("violeta", recorrido.tinteZona)
-        assertEquals(TipoZona.CASA, recorrido.tipoZona)
-    }
-
-    @Test
-    fun `si la zona no responde la sala se muestra sin recorrido`() = runTest {
-        val recorrido = (ObtenerSalaUseCase(MundoFalso(zona = null))("sala-2") as Resultado.Exito).datos
-
-        assertNull(recorrido.anterior)
-        assertNull(recorrido.siguiente)
-        assertEquals(0, recorrido.total)
     }
 }

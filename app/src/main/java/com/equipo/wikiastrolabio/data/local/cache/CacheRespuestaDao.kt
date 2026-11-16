@@ -15,7 +15,4 @@ interface CacheRespuestaDao {
 
     @Query("DELETE FROM cache_respuestas WHERE clave = :clave")
     suspend fun eliminar(clave: String)
-
-    @Query("DELETE FROM cache_respuestas")
-    suspend fun vaciar()
 }

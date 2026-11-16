@@ -20,10 +20,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.equipo.wikiastrolabio.R
 import com.equipo.wikiastrolabio.domain.model.Archivo
 import com.equipo.wikiastrolabio.ui.common.UiState
-import com.equipo.wikiastrolabio.ui.components.ChipEnlace
 import com.equipo.wikiastrolabio.ui.components.EncabezadoPantalla
 import com.equipo.wikiastrolabio.ui.components.EtiquetaSeccion
 import com.equipo.wikiastrolabio.ui.components.FilaInsignias
+import com.equipo.wikiastrolabio.ui.components.Insignia
 import com.equipo.wikiastrolabio.ui.components.MarcoIlustracion
 import com.equipo.wikiastrolabio.ui.components.PanelPixel
 import com.equipo.wikiastrolabio.ui.components.PantallaContenido
@@ -38,16 +38,12 @@ import com.equipo.wikiastrolabio.ui.theme.WikiAstrolabioTheme
 @Composable
 fun ArchivoDetalleRoute(
     onAtras: () -> Unit,
-    onZonaClick: (slug: String) -> Unit,
-    onSalaClick: (slug: String) -> Unit,
     viewModel: ArchivoDetalleViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     ArchivoDetalleScreen(
         uiState = uiState,
         onAtras = onAtras,
-        onZonaClick = onZonaClick,
-        onSalaClick = onSalaClick,
         onReintentar = viewModel::reintentar,
         onRecargar = viewModel::recargar,
     )
@@ -58,8 +54,6 @@ fun ArchivoDetalleRoute(
 fun ArchivoDetalleScreen(
     uiState: UiState<Archivo>,
     onAtras: () -> Unit,
-    onZonaClick: (slug: String) -> Unit,
-    onSalaClick: (slug: String) -> Unit,
     onReintentar: () -> Unit,
     onRecargar: () -> Unit,
     modifier: Modifier = Modifier,
@@ -77,13 +71,16 @@ fun ArchivoDetalleScreen(
             )
         },
     ) { archivo ->
-        item(key = "ilustracion") {
-            MarcoIlustracion(
-                url = archivo.imagenUrl,
-                descripcion = archivo.titulo,
-                semilla = archivo.slug,
-                relacionAspecto = 2f,
-            )
+        // Solo si el archivo tiene imagen: los poemas y las notas de XI hoy no traen.
+        if (!archivo.imagenUrl.isNullOrBlank()) {
+            item(key = "ilustracion") {
+                MarcoIlustracion(
+                    url = archivo.imagenUrl,
+                    descripcion = archivo.titulo,
+                    semilla = archivo.slug,
+                    relacionAspecto = 2f,
+                )
+            }
         }
         item(key = "documento") { Pergamino(archivo) }
 
@@ -95,8 +92,8 @@ fun ArchivoDetalleScreen(
                         Text(it, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
                     }
                     FilaInsignias {
-                        archivo.zona?.let { zona -> ChipEnlace(zona.nombre, onClick = { onZonaClick(zona.slug) }) }
-                        archivo.sala?.let { sala -> ChipEnlace(sala.nombre, onClick = { onSalaClick(sala.slug) }) }
+                        archivo.zona?.let { zona -> Insignia(zona.nombre) }
+                        archivo.sala?.let { sala -> Insignia(sala.nombre) }
                     }
                 }
             }
@@ -143,8 +140,6 @@ private fun ArchivoDetalleScreenPreview() {
         ArchivoDetalleScreen(
             uiState = UiState.Exito(DatosPreview.archivo),
             onAtras = {},
-            onZonaClick = {},
-            onSalaClick = {},
             onReintentar = {},
             onRecargar = {},
         )
