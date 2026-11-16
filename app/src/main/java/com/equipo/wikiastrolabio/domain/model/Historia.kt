@@ -5,6 +5,8 @@ data class SeccionHistoria(
     val slug: String,
     val titulo: String,
     val entradas: List<EntradaHistoria>,
+    /** Ilustración del capítulo; null mientras el equipo no suba una. */
+    val imagenUrl: String? = null,
 )
 
 data class EntradaHistoria(

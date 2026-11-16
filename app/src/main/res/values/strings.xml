@@ -6,7 +6,6 @@
     <string name="accion_atras">Regresar</string>
     <string name="navegacion_anterior">Anterior</string>
     <string name="navegacion_siguiente">Siguiente</string>
-    <string name="ilustracion_pendiente">Ilustración pendiente</string>
     <string name="estado_desplegado">Desplegada</string>
     <string name="estado_plegado">Plegada</string>
 
@@ -24,20 +23,18 @@
 
     <!-- Barra de navegación inferior -->
     <string name="nav_inicio">Inicio</string>
-    <string name="nav_mundo">Mundo</string>
+    <string name="nav_historia">Historia</string>
     <string name="nav_archivos">Archivos</string>
 
     <!-- Inicio -->
     <string name="inicio_titulo">Astrolabio</string>
     <string name="inicio_registro">Registro del Gran Reloj Cósmico</string>
     <string name="inicio_lema">Cada secreto, a su tiempo.</string>
-    <string name="inicio_subtitulo">Tu guía al universo de Astrolabio: su historia, sus Casas, quienes lo habitan y todo lo que dejaron atrás.</string>
+    <string name="inicio_subtitulo">Tu guía al universo de Astrolabio: su historia, quienes lo habitan, sus habilidades y todo lo que dejaron atrás.</string>
     <string name="inicio_explora">Explora el códex</string>
     <string name="inicio_destacado">Comienza aquí</string>
     <string name="codex_historia">Historia</string>
     <string name="codex_historia_desc">El origen del Gran Reloj y lo que lo rompió.</string>
-    <string name="codex_mundo">Mundo</string>
-    <string name="codex_mundo_desc">Recorre el mapa del Reloj, sus Casas y sus salas.</string>
     <string name="codex_personajes">Personajes</string>
     <string name="codex_personajes_desc">Quienes habitan entre los engranajes.</string>
     <string name="codex_mecanicas">Mecánicas</string>
@@ -57,60 +54,12 @@
         <item quantity="other">%d entradas</item>
     </plurals>
 
-    <!-- Mundo y zonas -->
-    <string name="mundo_titulo">El Gran Reloj</string>
-    <string name="mundo_antetitulo">Mapa del cosmos</string>
-    <string name="mundo_toca_marcador">Toca un marcador para ver el lugar</string>
-    <string name="mundo_localizacion">Localización %1$s · %2$s</string>
-    <string name="mundo_explorar">Explorar</string>
-    <string name="mundo_lugares">Lugares del Reloj</string>
-    <string name="tipo_zona_eje">Eje del Reloj</string>
-    <string name="tipo_zona_casa">Casa del zodiaco</string>
-    <string name="tipo_zona_cierre">Desenlace</string>
-    <string name="tipo_zona_desconocido">Zona</string>
-    <string name="zona_titulo">Zona</string>
-    <string name="zona_constelacion">Constelación de %1$s</string>
-    <string name="zona_tutorial">Tutorial</string>
-    <string name="zona_sin_plataformas">Sin plataformas</string>
-    <string name="zona_idea_central">Idea central</string>
-    <string name="zona_tono_emocional">Tono emocional</string>
-    <string name="zona_habitaciones">Habitaciones</string>
-    <string name="zona_exterior">Exterior</string>
-    <string name="zona_ambientacion">Ambientación</string>
-    <string name="zona_narrativa">Narrativa</string>
-    <string name="zona_mecanicas">Mecánicas de la zona</string>
-    <string name="zona_coleccionables">Coleccionables</string>
-    <string name="zona_direccion_arte">Dirección de arte</string>
-    <string name="zona_paleta">Paleta</string>
-    <string name="zona_iluminacion">Iluminación</string>
-    <string name="zona_sensacion_visual">Sensación visual</string>
-    <string name="zona_tinte">Color de la zona</string>
-    <string name="zona_restauracion">Al restaurarla</string>
-
-    <!-- Salas -->
-    <string name="sala_posicion">Habitación %1$s / %2$s</string>
-    <string name="sala_posicion_simple">Habitación %1$s</string>
-    <string name="sala_ver_zona">%1$s</string>
-    <string name="sala_observatorio">Observatorio</string>
-    <string name="sala_zona_segura">Zona segura</string>
-    <string name="sala_aprendizaje">Se aprende</string>
-    <string name="sala_observatorio_mayor">Observatorio mayor</string>
-    <string name="sala_archivos">Archivos en esta sala</string>
-    <string name="sala_anterior">Sala anterior</string>
-    <string name="sala_siguiente">Sala siguiente</string>
-    <string name="observatorio_exterior">Exterior</string>
-    <string name="observatorio_interior">Interior</string>
-    <string name="observatorio_luz">Luz</string>
-    <string name="observatorio_audio">Sonido</string>
-    <string name="observatorio_descubrimientos">Descubrimientos</string>
-
     <!-- Diálogos -->
     <string name="dialogos_titulo">Diálogos</string>
     <string name="dialogo_sin_titulo">Diálogo</string>
     <string name="dialogo_escena">Escena</string>
     <string name="dialogo_indicacion">Indicaciones</string>
     <string name="dialogo_cita">Cita</string>
-    <string name="dialogo_habla">Habla %1$s</string>
     <string name="dialogo_ocurre_en">En %1$s</string>
 
     <!-- Personajes -->

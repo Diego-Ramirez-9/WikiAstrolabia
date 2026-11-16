@@ -18,7 +18,7 @@ sealed interface Ruta {
     data object PestanaInicio : Ruta
 
     @Serializable
-    data object PestanaMundo : Ruta
+    data object PestanaHistoria : Ruta
 
     @Serializable
     data object PestanaArchivos : Ruta
@@ -29,12 +29,6 @@ sealed interface Ruta {
     data object Inicio : Ruta
 
     @Serializable
-    data object Historia : Ruta
-
-    @Serializable
-    data class EntradaHistoriaDetalle(val slug: String) : Ruta
-
-    @Serializable
     data object Personajes : Ruta
 
     @Serializable
@@ -43,16 +37,13 @@ sealed interface Ruta {
     @Serializable
     data object Mecanicas : Ruta
 
-    // --- Pestaña Mundo ---
+    // --- Pestaña Historia ---
 
     @Serializable
-    data object Mundo : Ruta
+    data object Historia : Ruta
 
     @Serializable
-    data class ZonaDetalle(val slug: String) : Ruta
-
-    @Serializable
-    data class SalaDetalle(val slug: String) : Ruta
+    data class EntradaHistoriaDetalle(val slug: String) : Ruta
 
     // --- Pestaña Archivos ---
 

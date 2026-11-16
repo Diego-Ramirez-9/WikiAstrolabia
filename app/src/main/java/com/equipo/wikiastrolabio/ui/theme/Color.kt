@@ -19,7 +19,6 @@ val Noche900 = Color(0xFF0F1B27)
 val Noche850 = Color(0xFF15253A)
 val Noche800 = Color(0xFF1D3046)
 val Noche700 = Color(0xFF2B4560)
-val Niebla400 = Color(0xFF8396AA)
 
 // Pergamino: texto.
 val Crema100 = Color(0xFFF6EBDA)
@@ -30,8 +29,3 @@ val Ambar400 = Color(0xFFFFAA5E)
 val Terracota500 = Color(0xFFD08159)
 val Arena300 = Color(0xFFFFD4A3)
 val Rojo400 = Color(0xFFE5776B)
-
-// Tintes de zona (campo "tinteFondo" de la API). Los desconocidos usan Ambar400.
-val TinteVioleta = Color(0xFFAE93E6)
-val TinteTurquesa = Color(0xFF4FC6B6)
-val TinteLaton = Color(0xFFD9B36C)

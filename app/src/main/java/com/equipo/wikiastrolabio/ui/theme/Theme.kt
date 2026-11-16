@@ -69,14 +69,6 @@ fun ConAcento(acento: Color, contenido: @Composable () -> Unit) {
     CompositionLocalProvider(LocalAcento provides acento, content = contenido)
 }
 
-/** Convierte el campo "tinteFondo" de la API en un color; los desconocidos usan el ámbar. */
-fun colorDeTinte(tinte: String?): Color = when (tinte?.trim()?.lowercase()) {
-    "violeta", "morado", "purpura", "púrpura" -> TinteVioleta
-    "turquesa", "aguamarina", "cian" -> TinteTurquesa
-    "laton", "latón", "dorado", "oro" -> TinteLaton
-    else -> Ambar400
-}
-
 @Composable
 fun WikiAstrolabioTheme(content: @Composable () -> Unit) {
     MaterialTheme(

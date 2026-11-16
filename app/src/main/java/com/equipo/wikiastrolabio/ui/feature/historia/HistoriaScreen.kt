@@ -22,6 +22,7 @@ import com.equipo.wikiastrolabio.ui.common.UiState
 import com.equipo.wikiastrolabio.ui.components.Divisor
 import com.equipo.wikiastrolabio.ui.components.EncabezadoPantalla
 import com.equipo.wikiastrolabio.ui.components.FilaIndice
+import com.equipo.wikiastrolabio.ui.components.MarcoIlustracion
 import com.equipo.wikiastrolabio.ui.components.PantallaContenido
 import com.equipo.wikiastrolabio.ui.preview.DatosPreview
 import com.equipo.wikiastrolabio.ui.theme.Espaciado
@@ -110,6 +111,14 @@ private fun EncabezadoCapitulo(numero: Int, seccion: SeccionHistoria) {
             text = pluralStringResource(R.plurals.historia_entradas, seccion.entradas.size, seccion.entradas.size).uppercase(),
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        // Ilustración del capítulo (4:3, como en el diseño); sin URL muestra el cielo de reemplazo.
+        MarcoIlustracion(
+            url = seccion.imagenUrl,
+            descripcion = seccion.titulo,
+            semilla = seccion.slug,
+            relacionAspecto = 4f / 3f,
+            modifier = Modifier.padding(top = Espaciado.s),
         )
         Divisor(Modifier.padding(top = Espaciado.s))
     }

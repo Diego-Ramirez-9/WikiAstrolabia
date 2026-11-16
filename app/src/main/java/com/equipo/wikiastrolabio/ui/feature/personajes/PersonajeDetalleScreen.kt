@@ -38,14 +38,12 @@ import com.equipo.wikiastrolabio.ui.theme.WikiAstrolabioTheme
 @Composable
 fun PersonajeDetalleRoute(
     onAtras: () -> Unit,
-    onSalaClick: (slug: String) -> Unit,
     viewModel: PersonajeDetalleViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     PersonajeDetalleScreen(
         uiState = uiState,
         onAtras = onAtras,
-        onSalaClick = onSalaClick,
         onReintentar = viewModel::reintentar,
         onRecargar = viewModel::recargar,
     )
@@ -56,7 +54,6 @@ fun PersonajeDetalleRoute(
 fun PersonajeDetalleScreen(
     uiState: UiState<Personaje>,
     onAtras: () -> Unit,
-    onSalaClick: (slug: String) -> Unit,
     onReintentar: () -> Unit,
     onRecargar: () -> Unit,
     modifier: Modifier = Modifier,
@@ -75,13 +72,15 @@ fun PersonajeDetalleScreen(
             )
         },
     ) { personaje ->
-        item(key = "retrato") {
-            MarcoIlustracion(
-                url = personaje.imagenUrl,
-                descripcion = personaje.nombre,
-                semilla = personaje.slug,
-                relacionAspecto = 4f / 3f,
-            )
+        if (!personaje.imagenUrl.isNullOrBlank()) {
+            item(key = "retrato") {
+                MarcoIlustracion(
+                    url = personaje.imagenUrl,
+                    descripcion = personaje.nombre,
+                    semilla = personaje.slug,
+                    relacionAspecto = 4f / 3f,
+                )
+            }
         }
         item(key = "insignias") {
             FilaInsignias {
@@ -111,7 +110,7 @@ fun PersonajeDetalleScreen(
                 EtiquetaSeccion(stringResource(R.string.dialogos_titulo), detalle = personaje.dialogos.size.toString().padStart(2, '0'))
             }
             items(personaje.dialogos, key = { "dialogo-${it.slug}" }) { dialogo ->
-                BloqueDialogo(dialogo, onSalaClick = onSalaClick)
+                BloqueDialogo(dialogo)
             }
         }
     }
@@ -153,7 +152,6 @@ private fun PersonajeDetalleScreenPreview() {
         PersonajeDetalleScreen(
             uiState = UiState.Exito(DatosPreview.personaje),
             onAtras = {},
-            onSalaClick = {},
             onReintentar = {},
             onRecargar = {},
         )

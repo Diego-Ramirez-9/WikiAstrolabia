@@ -2,7 +2,7 @@
 
 Aplicación móvil Android que funciona como wiki oficial del videojuego **Astrolabio**, un plataformero 2D de un jugador donde se asume el rol de **Almanaque XII** en su ascenso por el Gran Reloj Cósmico, usando puntos de anclaje y un gancho para superar abismos y obstáculos.
 
-La app muestra la historia, el mundo (mapa, Casas y salas), los personajes, las mecánicas y los archivos del juego. **Todo el contenido viene de la API del equipo** y se guarda para consultarlo sin conexión.
+La app muestra la historia, los personajes, las mecánicas y los archivos del juego, las mismas secciones que el sitio web. **Todo el contenido viene de la API del equipo** y se guarda para consultarlo sin conexión.
 
 ## Stack técnico
 
@@ -49,12 +49,15 @@ API_BASE_URL=https://otro-despliegue.vercel.app/api/v1/
 - Al abrir, consulta `GET /contenido/version` en segundo plano. Si la fecha cambió, cada pantalla vuelve a descargar su contenido la próxima vez que se abre; si no, usa lo guardado en Room sin gastar datos.
 - Sin internet se muestra lo último guardado. Una sección que nunca se abrió muestra "Sin conexión" con botón de reintentar.
 - Deslizar hacia abajo en cualquier pantalla fuerza la descarga.
-- Se muestran **todos** los campos que manda la API: en una Casa, su constelación, tono emocional, idea central, coleccionables, paleta, iluminación y restauración; en un observatorio, su contenido, sonido y descubrimientos; en los diálogos, quién habla y en qué sala ocurren.
-- **Imágenes:** mientras `imagenUrl` / `iconoUrl` vengan en `null`, cada ilustración muestra un cielo estrellado propio de ese elemento con la leyenda "Ilustración pendiente". En cuanto el equipo suba la imagen a Supabase Storage y ponga su URL en la base de datos, la app la muestra sola, sin publicar otra versión.
+- La app usa 8 rutas de la API: `/contenido/version`, `/historia`, `/historia/:slug`, `/personajes`, `/personajes/:slug`, `/mecanicas`, `/archivos` y `/archivos/:slug`. No usa `/salud`, `/mapa`, `/zonas` ni `/salas`: la sección Mundo (mapa, Casas y salas) se quitó, igual que en el sitio web.
+- La barra inferior tiene tres pestañas: **Inicio** (con Personajes y Mecánicas), **Historia** y **Archivos**.
+- Cada capítulo de la Historia muestra su ilustración (`imagenUrl` de la sección en `GET /historia`, desde la API 1.1.0).
+- Se muestran todos los campos que manda la API para estas secciones. La zona y la sala de un archivo, y la sala donde ocurre un diálogo, aparecen como texto informativo (sin enlace, porque la app ya no tiene pantallas de zonas ni salas).
+- **Imágenes:** si `imagenUrl` viene en `null` (por ejemplo, en los poemas, las notas de XI y las entradas de la Historia), la pantalla no deja espacio para la ilustración. Los íconos de habilidades y colecciones (`iconoUrl`) usan un ícono pixel mientras no tengan imagen. En cuanto el equipo suba la imagen a Supabase Storage y ponga su URL en la base de datos, la app la muestra sola, sin publicar otra versión.
 
 ### Pruebas de contrato con la API
 
-`app/src/test/resources/api-v1/` guarda las 59 respuestas reales de la API que usa la app y `ContratoApiTest` comprueba que la app las sigue entendiendo. Cuando el equipo de la API cambie algo, actualízalas y corre las pruebas:
+`app/src/test/resources/api-v1/` guarda las 31 respuestas reales de la API que usa la app y `ContratoApiTest` comprueba que la app las sigue entendiendo. Cuando el equipo de la API cambie algo, actualízalas y corre las pruebas:
 
 ```bash
 python tools/api/actualizar_respuestas_prueba.py
@@ -73,7 +76,7 @@ app/src/main/java/com/equipo/wikiastrolabio/
 ├── MainViewModel.kt          Consulta /contenido/version al abrir la app
 ├── di/                       Módulos de Hilt (red, base de datos, repositorios)
 ├── domain/                   Lógica pura de Kotlin, sin Android
-│   ├── model/                Modelos que usa la UI (Personaje, Zona, RecorridoSala…)
+│   ├── model/                Modelos que usa la UI (Personaje, SeccionHistoria, Archivo…)
 │   ├── repository/           Interfaces de los repositorios
 │   └── usecase/<sección>/    Un caso de uso por operación
 ├── data/                     De dónde salen los datos
@@ -87,7 +90,7 @@ app/src/main/java/com/equipo/wikiastrolabio/
     ├── theme/                Tokens de diseño: color, tipografía, formas y espaciado
     ├── components/           Componentes del sistema de diseño (paneles, encabezados, filas…)
     │   └── pixel/            Íconos y decoraciones en pixel art dibujados por código
-    ├── common/               UiState, ContenidoViewModel y colores por zona
+    ├── common/               UiState y ContenidoViewModel
     ├── preview/              Datos de ejemplo SOLO para las @Preview
     └── feature/<pantalla>/   XScreen.kt (dibuja), XViewModel.kt (estado), components/
 ```
@@ -101,11 +104,10 @@ La identidad visual parte del Figma del equipo de UI/UX (azul nocturno, cobre y 
 | Pieza | Dónde | Regla |
 |---|---|---|
 | Color | `ui/theme/Color.kt`, `Theme.kt` | 60 % azul nocturno, 30 % pergamino, 10 % acento. El ámbar es el único color de interacción. |
-| Color por zona | `LocalAcento`, `ui/common/ColoresZona.kt` | Cada Casa tiñe su pantalla con su `tinteFondo` de la API (Géminis violeta, Acuario turquesa); el Eje es latón y el desenlace, cobre. |
 | Tipografía | `ui/theme/Type.kt` | Pixelify Sans para títulos, etiquetas y números; serif para los textos de lectura. Escala 1.25: 11 · 12 · 13 · 15 · 19 · 24 · 30 · 37. |
 | Formas | `Theme.kt` | Esquinas cortadas (como un escalón de píxel) en lugar de redondeadas. |
 | Espaciado | `ui/theme/Espaciado.kt` | Base de 4 dp, margen de pantalla de 20 dp, áreas tocables de 48 dp. |
-| Componentes | `ui/components/` | `EncabezadoPantalla`, `PanelPixel`, `EtiquetaSeccion`, `FilaIndice`, `Insignia`, `ChipEnlace`, `FichaDatos`, `CitaDestacada`, `TextoLectura`, `MarcoIlustracion`, `BloqueDialogo`, `NavegacionVecinos`, `BotonPixel` y los estados de carga y error. |
+| Componentes | `ui/components/` | `EncabezadoPantalla`, `PanelPixel`, `EtiquetaSeccion`, `FilaIndice`, `Insignia`, `TextoLectura`, `MarcoIlustracion`, `BloqueDialogo`, `NavegacionVecinos`, `BotonPixel` y los estados de carga y error. |
 | Íconos | `ui/components/pixel/IconosPixel.kt` | Cuadrícula de 16×16; los nuevos se dibujan con un patrón de texto (`IconoPatron`). |
 
 Para cambiar el aspecto de toda la app basta con editar los tokens del tema o los componentes: las pantallas solo los combinan. Cada pantalla y componente tiene su `@Preview` con datos de ejemplo.

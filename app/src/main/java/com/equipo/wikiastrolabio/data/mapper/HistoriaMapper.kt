@@ -10,6 +10,7 @@ fun SeccionHistoriaDto.aDominio() = SeccionHistoria(
     slug = slug,
     titulo = titulo,
     entradas = entradas.map { it.aDominio() },
+    imagenUrl = imagenUrl,
 )
 
 fun EntradaHistoriaDto.aDominio() = EntradaHistoria(

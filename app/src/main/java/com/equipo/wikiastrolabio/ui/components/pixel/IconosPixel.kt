@@ -13,7 +13,6 @@ import androidx.compose.ui.unit.dp
 import com.equipo.wikiastrolabio.ui.theme.Ambar400
 import com.equipo.wikiastrolabio.ui.theme.Arena300
 import com.equipo.wikiastrolabio.ui.theme.Crema100
-import com.equipo.wikiastrolabio.ui.theme.Niebla400
 import com.equipo.wikiastrolabio.ui.theme.Noche700
 import com.equipo.wikiastrolabio.ui.theme.Noche800
 import com.equipo.wikiastrolabio.ui.theme.Terracota500
@@ -71,24 +70,8 @@ fun IconoEngranaje(modifier: Modifier = Modifier, tamano: Dp = 24.dp, color: Col
     IconoPatron(ENGRANAJE, modifier, tamano, principal = color)
 
 @Composable
-fun IconoObservatorio(modifier: Modifier = Modifier, tamano: Dp = 24.dp, color: Color = Ambar400) =
-    IconoPatron(OJO, modifier, tamano, principal = color)
-
-@Composable
-fun IconoZonaSegura(modifier: Modifier = Modifier, tamano: Dp = 24.dp, color: Color = Ambar400) =
-    IconoPatron(ESCUDO, modifier, tamano, principal = color)
-
-@Composable
-fun IconoPoema(modifier: Modifier = Modifier, tamano: Dp = 24.dp, color: Color = Ambar400) =
-    IconoPatron(PLUMA, modifier, tamano, principal = color, detalle = color.copy(alpha = 0.5f))
-
-@Composable
 fun IconoDialogo(modifier: Modifier = Modifier, tamano: Dp = 24.dp, color: Color = Ambar400) =
     IconoPatron(BOCADILLO, modifier, tamano, principal = color, relleno = color.copy(alpha = 0.15f), detalle = color)
-
-@Composable
-fun IconoIlustracion(modifier: Modifier = Modifier, tamano: Dp = 24.dp, color: Color = Niebla400) =
-    IconoPatron(MARCO, modifier, tamano, principal = color, relleno = color.copy(alpha = 0.6f), detalle = color)
 
 @Composable
 fun IconoEstrellaGuia(modifier: Modifier = Modifier, tamano: Dp = 24.dp, color: Color = Ambar400) =
@@ -109,18 +92,6 @@ fun IconoHistoria(modifier: Modifier = Modifier, tamano: Dp = 32.dp) = IconoPixe
     p(7, 8, Arena300, 2, 1)
     p(7, 9, Crema100, 2, 1); p(6, 10, Crema100, 4, 1); p(5, 11, Crema100, 6, 1)
     p(7, 10, Arena300, 2, 1); p(6, 11, Arena300, 4, 1); p(5, 12, Ambar400, 6, 1)
-}
-
-/** Carta estelar: Mundo. */
-@Composable
-fun IconoMundo(modifier: Modifier = Modifier, tamano: Dp = 32.dp) = IconoPixel(modifier, tamano) {
-    p(2, 2, Crema100, 12, 12); p(3, 3, Arena300, 10, 10)
-    p(1, 3, Terracota500, 1, 10); p(14, 3, Terracota500, 1, 10)
-    p(2, 1, Terracota500, 12, 1); p(2, 14, Terracota500, 12, 1)
-    p(2, 2, Ambar400, 2, 2); p(12, 2, Ambar400, 2, 2); p(2, 12, Ambar400, 2, 2); p(12, 12, Ambar400, 2, 2)
-    p(4, 5, Noche700, 3, 1); p(6, 6, Noche700, 1, 3); p(7, 8, Noche700, 3, 1)
-    p(10, 5, Terracota500); p(12, 5, Terracota500); p(11, 6, Terracota500); p(10, 7, Terracota500); p(12, 7, Terracota500)
-    p(5, 10, Ambar400, 2, 2)
 }
 
 /** Medallón con autómata: Personajes. */
@@ -208,63 +179,6 @@ private val ENGRANAJE = listOf(
     "................",
 )
 
-private val OJO = listOf(
-    "................",
-    "................",
-    "................",
-    "......####......",
-    "....##....##....",
-    "..##..####..##..",
-    ".#...##oo##...#.",
-    "#....#oooo#....#",
-    ".#...##oo##...#.",
-    "..##..####..##..",
-    "....##....##....",
-    "......####......",
-    "................",
-    "................",
-    "................",
-    "................",
-)
-
-private val ESCUDO = listOf(
-    "................",
-    "..############..",
-    "..#aaaaaaaaaa#..",
-    "..#aaaaaaaaaa#..",
-    "..#aaaaooaaaa#..",
-    "..#aaaaooaaaa#..",
-    "..#aaooooooaa#..",
-    "..#aaooooooaa#..",
-    "..#aaaaooaaaa#..",
-    "...#aaaooaaa#...",
-    "...#aaaaaaaa#...",
-    "....#aaaaaa#....",
-    ".....#aaaa#.....",
-    "......#aa#......",
-    ".......##.......",
-    "................",
-)
-
-private val PLUMA = listOf(
-    "................",
-    "............###.",
-    "...........#aa#.",
-    "..........#aa#..",
-    ".........#aa#...",
-    "........#aa#....",
-    ".......#aa#.....",
-    "......#aa#......",
-    ".....#aa#.......",
-    "....#aa#........",
-    "....#a#.........",
-    "...##...........",
-    "..#.............",
-    ".#..............",
-    "oooooo..........",
-    "................",
-)
-
 private val BOCADILLO = listOf(
     "................",
     "................",
@@ -279,25 +193,6 @@ private val BOCADILLO = listOf(
     "......##........",
     "......#.........",
     "................",
-    "................",
-    "................",
-    "................",
-)
-
-private val MARCO = listOf(
-    "................",
-    "................",
-    ".##############.",
-    ".#............#.",
-    ".#.........oo.#.",
-    ".#.........oo.#.",
-    ".#............#.",
-    ".#.....#......#.",
-    ".#....###.....#.",
-    ".#...#####.#..#.",
-    ".#..#######aa.#.",
-    ".#.##########a#.",
-    ".##############.",
     "................",
     "................",
     "................",

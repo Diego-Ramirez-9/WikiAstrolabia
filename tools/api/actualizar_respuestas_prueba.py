@@ -7,8 +7,8 @@ mappers de la app siguen entendiendo lo que manda la API.
     python tools/api/actualizar_respuestas_prueba.py [url_base]
 
 url_base por defecto: https://astrolabio-api.vercel.app/api/v1/
-Recorre los listados y sigue cada enlace a su detalle (historia, zonas, salas, personajes,
-archivos). Usa curl para respetar los certificados del sistema.
+Recorre los listados que usa la app y sigue cada enlace a su detalle (historia,
+personajes, archivos). Usa curl para respetar los certificados del sistema.
 """
 
 import json
@@ -23,7 +23,7 @@ URL_BASE = sys.argv[1] if len(sys.argv) > 1 else "https://astrolabio-api.vercel.
 
 
 def descargar(ruta: str) -> dict:
-    """GET {URL_BASE}{ruta}; guarda la respuesta como zonas?tipo=casa -> zonas.tipo-casa.json."""
+    """GET {URL_BASE}{ruta}; guarda la respuesta como historia/ofiuco -> historia/ofiuco.json."""
     resultado = subprocess.run(
         ["curl", "-s", "--fail-with-body", URL_BASE.rstrip("/") + "/" + ruta],
         capture_output=True,
@@ -41,16 +41,12 @@ def descargar(ruta: str) -> dict:
 def main():
     if SALIDA.exists():
         shutil.rmtree(SALIDA)
-    for ruta in ["contenido/version", "mapa", "mecanicas",
-                 "zonas?tipo=eje", "zonas?tipo=casa", "zonas?tipo=cierre"]:
+    for ruta in ["contenido/version", "mecanicas"]:
         descargar(ruta)
 
     for seccion in descargar("historia"):
         for entrada in seccion["entradas"]:
             descargar(f"historia/{entrada['slug']}")
-    for zona in descargar("zonas"):
-        for sala in descargar(f"zonas/{zona['slug']}")["salas"]:
-            descargar(f"salas/{sala['slug']}")
     for personaje in descargar("personajes"):
         descargar(f"personajes/{personaje['slug']}")
     for categoria in descargar("archivos"):

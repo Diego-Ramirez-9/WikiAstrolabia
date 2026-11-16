@@ -30,15 +30,13 @@ import com.equipo.wikiastrolabio.ui.theme.LocalAcento
 import com.equipo.wikiastrolabio.ui.theme.WikiAstrolabioTheme
 
 /**
- * Diálogo de Efeméride como transcripción: título, tipo, momento del juego, quién habla y
- * dónde ocurre (con enlaces) y las líneas con sus acotaciones de cámara o sonido.
+ * Diálogo de Efeméride como transcripción: título, tipo, momento del juego, la sala donde
+ * ocurre y las líneas con sus acotaciones de cámara o sonido.
  */
 @Composable
 fun BloqueDialogo(
     dialogo: Dialogo,
     modifier: Modifier = Modifier,
-    onPersonajeClick: ((slug: String) -> Unit)? = null,
-    onSalaClick: ((slug: String) -> Unit)? = null,
 ) {
     val acento = LocalAcento.current
     PanelPixel(modifier = modifier, separacion = Espaciado.m) {
@@ -60,17 +58,8 @@ fun BloqueDialogo(
             Text(it, style = MaterialTheme.typography.bodySmall, fontStyle = FontStyle.Italic, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
 
-        val personaje = dialogo.personaje
-        val sala = dialogo.sala
-        if ((personaje != null && onPersonajeClick != null) || (sala != null && onSalaClick != null)) {
-            FilaInsignias {
-                if (personaje != null && onPersonajeClick != null) {
-                    ChipEnlace(stringResource(R.string.dialogo_habla, personaje.nombre), onClick = { onPersonajeClick(personaje.slug) })
-                }
-                if (sala != null && onSalaClick != null) {
-                    ChipEnlace(stringResource(R.string.dialogo_ocurre_en, sala.nombre), onClick = { onSalaClick(sala.slug) })
-                }
-            }
+        dialogo.sala?.let { sala ->
+            FilaInsignias { Insignia(stringResource(R.string.dialogo_ocurre_en, sala.nombre)) }
         }
 
         Divisor()
@@ -121,9 +110,7 @@ private fun textoTipo(tipo: TipoDialogo): String? = when (tipo) {
 private fun BloqueDialogoPreview() {
     WikiAstrolabioTheme {
         BloqueDialogo(
-            dialogo = DatosPreview.sala.sala.dialogos.first(),
-            onPersonajeClick = {},
-            onSalaClick = {},
+            dialogo = DatosPreview.dialogo,
             modifier = Modifier.padding(Espaciado.l),
         )
     }

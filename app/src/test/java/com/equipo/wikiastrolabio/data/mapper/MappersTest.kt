@@ -2,12 +2,10 @@ package com.equipo.wikiastrolabio.data.mapper
 
 import com.equipo.wikiastrolabio.data.remote.dto.HabilidadDto
 import com.equipo.wikiastrolabio.data.remote.dto.PersonajeDto
-import com.equipo.wikiastrolabio.data.remote.dto.PuntoMapaDto
 import com.equipo.wikiastrolabio.data.remote.dto.RasgoDto
 import com.equipo.wikiastrolabio.domain.model.EstadoPersonaje
 import com.equipo.wikiastrolabio.domain.model.RolPersonaje
 import com.equipo.wikiastrolabio.domain.model.TipoHabilidad
-import com.equipo.wikiastrolabio.domain.model.TipoZona
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
@@ -33,25 +31,9 @@ class MappersTest {
 
     @Test
     fun `valores desconocidos de la API no rompen la app`() {
-        assertEquals(TipoZona.DESCONOCIDO, tipoZonaDesdeApi("satelite"))
         assertEquals(RolPersonaje.DESCONOCIDO, rolDesdeApi(null))
         assertEquals(EstadoPersonaje.DESCONOCIDO, estadoDesdeApi("reparado"))
         assertEquals(TipoHabilidad.DESCONOCIDO, tipoHabilidadDesdeApi(""))
-    }
-
-    @Test
-    fun `el filtro de zonas usa los mismos valores que la API`() {
-        TipoZona.entries.filter { it != TipoZona.DESCONOCIDO }.forEach { tipo ->
-            assertEquals(tipo, tipoZonaDesdeApi(tipo.valorApi))
-        }
-    }
-
-    @Test
-    fun `las coordenadas del mapa se acotan entre 0 y 1`() {
-        val punto = PuntoMapaDto(slug = "x", nombre = "X", tipo = "casa", x = 1.4f, y = -0.2f).aDominio()
-
-        assertEquals(1f, punto.x)
-        assertEquals(0f, punto.y)
     }
 
     @Test

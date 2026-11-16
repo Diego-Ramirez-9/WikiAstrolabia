@@ -37,7 +37,6 @@ import com.equipo.wikiastrolabio.ui.components.pixel.CampoEstelar
 import com.equipo.wikiastrolabio.ui.components.pixel.IconoArchivos
 import com.equipo.wikiastrolabio.ui.components.pixel.IconoHistoria
 import com.equipo.wikiastrolabio.ui.components.pixel.IconoMecanicas
-import com.equipo.wikiastrolabio.ui.components.pixel.IconoMundo
 import com.equipo.wikiastrolabio.ui.components.pixel.IconoPersonajes
 import com.equipo.wikiastrolabio.ui.components.pixel.RelojCosmicoDecorativo
 import com.equipo.wikiastrolabio.ui.components.pixel.desvanecerAbajo
@@ -47,7 +46,6 @@ import com.equipo.wikiastrolabio.ui.theme.WikiAstrolabioTheme
 
 /** Secciones del códex que se muestran en Inicio. */
 enum class SeccionCodex(@param:StringRes val titulo: Int, @param:StringRes val descripcion: Int) {
-    MUNDO(R.string.codex_mundo, R.string.codex_mundo_desc),
     HISTORIA(R.string.codex_historia, R.string.codex_historia_desc),
     PERSONAJES(R.string.codex_personajes, R.string.codex_personajes_desc),
     MECANICAS(R.string.codex_mecanicas, R.string.codex_mecanicas_desc),
@@ -55,8 +53,8 @@ enum class SeccionCodex(@param:StringRes val titulo: Int, @param:StringRes val d
 }
 
 /**
- * Portada: no consume la API. Mundo va destacado (es la puerta al contenido principal) y las
- * demás secciones forman una cuadrícula de 2×2.
+ * Portada: no consume la API. Historia va destacada (es el punto de partida del códex) y las
+ * demás secciones forman una cuadrícula de dos columnas.
  */
 @Composable
 fun InicioScreen(
@@ -76,8 +74,8 @@ fun InicioScreen(
         item { EtiquetaSeccion(stringResource(R.string.inicio_explora)) }
         item {
             TarjetaDestacada(
-                seccion = SeccionCodex.MUNDO,
-                onClick = { onSeccionClick(SeccionCodex.MUNDO) },
+                seccion = SeccionCodex.HISTORIA,
+                onClick = { onSeccionClick(SeccionCodex.HISTORIA) },
             )
         }
         val resto = SeccionCodex.entries.drop(1).chunked(2)
@@ -214,7 +212,6 @@ private fun TarjetaCodex(seccion: SeccionCodex, onClick: () -> Unit, modifier: M
 
 @Composable
 private fun IconoSeccion(seccion: SeccionCodex, tamano: Dp) = when (seccion) {
-    SeccionCodex.MUNDO -> IconoMundo(tamano = tamano)
     SeccionCodex.HISTORIA -> IconoHistoria(tamano = tamano)
     SeccionCodex.PERSONAJES -> IconoPersonajes(tamano = tamano)
     SeccionCodex.MECANICAS -> IconoMecanicas(tamano = tamano)
