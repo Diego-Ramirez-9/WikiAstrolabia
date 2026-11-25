@@ -11,6 +11,8 @@ import java.io.IOException
 internal fun Throwable.aErrorDatos(json: Json): ErrorDatos = when (this) {
     is HttpException -> when (code()) {
         404 -> ErrorDatos.NoEncontrado
+        // Solo al publicar una reseña: datos que no cumplen las reglas.
+        400 -> ErrorDatos.Rechazado(code(), mensajeDelServidor(json))
         in 500..599 -> ErrorDatos.Servidor(code(), mensajeDelServidor(json))
         else -> ErrorDatos.Desconocido(this)
     }

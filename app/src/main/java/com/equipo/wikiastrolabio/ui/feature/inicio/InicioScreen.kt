@@ -38,6 +38,7 @@ import com.equipo.wikiastrolabio.ui.components.pixel.IconoArchivos
 import com.equipo.wikiastrolabio.ui.components.pixel.IconoHistoria
 import com.equipo.wikiastrolabio.ui.components.pixel.IconoMecanicas
 import com.equipo.wikiastrolabio.ui.components.pixel.IconoPersonajes
+import com.equipo.wikiastrolabio.ui.components.pixel.IconoResenas
 import com.equipo.wikiastrolabio.ui.components.pixel.RelojCosmicoDecorativo
 import com.equipo.wikiastrolabio.ui.components.pixel.desvanecerAbajo
 import com.equipo.wikiastrolabio.ui.theme.Espaciado
@@ -50,6 +51,7 @@ enum class SeccionCodex(@param:StringRes val titulo: Int, @param:StringRes val d
     PERSONAJES(R.string.codex_personajes, R.string.codex_personajes_desc),
     MECANICAS(R.string.codex_mecanicas, R.string.codex_mecanicas_desc),
     ARCHIVOS(R.string.codex_archivos, R.string.codex_archivos_desc),
+    RESENAS(R.string.codex_resenas, R.string.codex_resenas_desc),
 }
 
 /**
@@ -216,6 +218,7 @@ private fun IconoSeccion(seccion: SeccionCodex, tamano: Dp) = when (seccion) {
     SeccionCodex.PERSONAJES -> IconoPersonajes(tamano = tamano)
     SeccionCodex.MECANICAS -> IconoMecanicas(tamano = tamano)
     SeccionCodex.ARCHIVOS -> IconoArchivos(tamano = tamano)
+    SeccionCodex.RESENAS -> IconoResenas(tamano = tamano)
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFF0A131C, heightDp = 900)

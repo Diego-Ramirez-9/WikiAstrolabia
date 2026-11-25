@@ -7,6 +7,7 @@ import com.equipo.wikiastrolabio.data.remote.dto.EntradaHistoriaDto
 import com.equipo.wikiastrolabio.data.remote.dto.MecanicasDto
 import com.equipo.wikiastrolabio.data.remote.dto.PersonajeDto
 import com.equipo.wikiastrolabio.data.remote.dto.PersonajeResumenDto
+import com.equipo.wikiastrolabio.data.remote.dto.ResumenResenasDto
 import com.equipo.wikiastrolabio.data.remote.dto.RespuestaApi
 import com.equipo.wikiastrolabio.data.remote.dto.SeccionHistoriaDto
 import com.equipo.wikiastrolabio.data.remote.dto.VersionContenidoDto
@@ -40,6 +41,13 @@ class ContratoApiTest {
         assertTrue(leer<List<PersonajeResumenDto>>("personajes").map { it.aDominio() }.isNotEmpty())
         assertTrue(leer<MecanicasDto>("mecanicas").aDominio().jugables.isNotEmpty())
         assertTrue(leer<List<CategoriaArchivoDto>>("archivos").map { it.aDominio() }.isNotEmpty())
+    }
+
+    @Test
+    fun `las resenas se leen con su fecha y calificacion`() {
+        val resumen = leer<ResumenResenasDto>("resenas").aDominio()
+        assertTrue(resumen.total >= resumen.resenas.size)
+        assertTrue(resumen.resenas.all { it.calificacion in 1..5 && it.creadoEn != null && it.apodo.isNotBlank() })
     }
 
     @Test

@@ -37,6 +37,9 @@ sealed interface Ruta {
     @Serializable
     data object Mecanicas : Ruta
 
+    @Serializable
+    data object Resenas : Ruta
+
     // --- Pestaña Historia ---
 
     @Serializable

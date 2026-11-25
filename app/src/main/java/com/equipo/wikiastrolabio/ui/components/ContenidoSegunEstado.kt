@@ -187,6 +187,7 @@ private val ErrorDatos.mensaje: Int
         ErrorDatos.SinConexion -> R.string.error_sin_conexion
         ErrorDatos.NoEncontrado -> R.string.error_no_encontrado
         is ErrorDatos.Servidor -> R.string.error_servidor
+        is ErrorDatos.Rechazado -> R.string.error_desconocido
         ErrorDatos.DatosInvalidos -> R.string.error_datos_invalidos
         is ErrorDatos.Desconocido -> R.string.error_desconocido
     }

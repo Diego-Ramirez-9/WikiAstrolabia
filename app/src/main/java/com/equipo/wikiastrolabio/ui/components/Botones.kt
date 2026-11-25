@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -23,7 +24,8 @@ import com.equipo.wikiastrolabio.ui.theme.LocalAcento
 
 /**
  * Botón del juego. [primario] = relleno con el acento (una acción principal por pantalla);
- * secundario = solo borde. Lleva una flecha pixel al final si [conFlecha].
+ * secundario = solo borde. Lleva una flecha pixel al final si [conFlecha]. Con
+ * [habilitado] = false se atenúa y no responde.
  */
 @Composable
 fun BotonPixel(
@@ -32,12 +34,16 @@ fun BotonPixel(
     modifier: Modifier = Modifier,
     primario: Boolean = true,
     conFlecha: Boolean = true,
+    habilitado: Boolean = true,
 ) {
     val acento = LocalAcento.current
     val colorTexto = if (primario) MaterialTheme.colorScheme.onPrimary else acento
     Surface(
         onClick = onClick,
-        modifier = modifier.defaultMinSize(minHeight = Espaciado.objetivoTactil),
+        enabled = habilitado,
+        modifier = modifier
+            .defaultMinSize(minHeight = Espaciado.objetivoTactil)
+            .alpha(if (habilitado) 1f else 0.45f),
         shape = MaterialTheme.shapes.small,
         color = if (primario) acento else acento.copy(alpha = 0.08f),
         border = if (primario) null else BorderStroke(1.dp, acento.copy(alpha = 0.7f)),
