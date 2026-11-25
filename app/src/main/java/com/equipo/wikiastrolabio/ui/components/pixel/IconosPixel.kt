@@ -114,6 +114,17 @@ fun IconoMecanicas(modifier: Modifier = Modifier, tamano: Dp = 32.dp) = IconoPix
     p(7, 8, Noche700); p(8, 8, Noche700)
 }
 
+/** Bocadillo con una estrella: Reseñas. */
+@Composable
+fun IconoResenas(modifier: Modifier = Modifier, tamano: Dp = 32.dp) = IconoPixel(modifier, tamano) {
+    p(2, 1, Terracota500, 12, 1); p(1, 2, Terracota500, 1, 9); p(14, 2, Terracota500, 1, 9); p(2, 11, Terracota500, 12, 1)
+    p(3, 12, Terracota500, 3, 1); p(3, 13, Terracota500, 2, 1); p(3, 14, Terracota500)
+    p(2, 2, Crema100, 12, 9)
+    p(7, 3, Ambar400, 2, 2); p(4, 5, Ambar400, 8, 1); p(5, 6, Ambar400, 6, 1); p(6, 7, Ambar400, 4, 1)
+    p(5, 8, Ambar400, 2, 1); p(9, 8, Ambar400, 2, 1); p(4, 9, Ambar400, 2, 1); p(10, 9, Ambar400, 2, 1)
+    p(7, 5, Terracota500, 2, 1)
+}
+
 /** Pergamino: Archivos. */
 @Composable
 fun IconoArchivos(modifier: Modifier = Modifier, tamano: Dp = 32.dp) = IconoPixel(modifier, tamano) {

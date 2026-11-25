@@ -33,6 +33,12 @@ sealed interface ErrorDatos {
     /** La API respondió 404: el slug o la ruta no existen. */
     data object NoEncontrado : ErrorDatos
 
+    /**
+     * La API rechazó un envío (400: datos que no cumplen las reglas). Solo ocurre al publicar
+     * una reseña; [mensaje] viene de la API y se puede mostrar tal cual.
+     */
+    data class Rechazado(val codigoHttp: Int, val mensaje: String?) : ErrorDatos
+
     /** La API respondió 5xx. */
     data class Servidor(val codigoHttp: Int, val mensaje: String?) : ErrorDatos
 

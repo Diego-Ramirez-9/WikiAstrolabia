@@ -41,7 +41,8 @@ def descargar(ruta: str) -> dict:
 def main():
     if SALIDA.exists():
         shutil.rmtree(SALIDA)
-    for ruta in ["contenido/version", "mecanicas"]:
+    # "resenas" cambia cada vez que alguien publica: basta con que la forma siga igual.
+    for ruta in ["contenido/version", "mecanicas", "resenas"]:
         descargar(ruta)
 
     for seccion in descargar("historia"):

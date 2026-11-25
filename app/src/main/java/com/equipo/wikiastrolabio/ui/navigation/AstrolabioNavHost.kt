@@ -15,6 +15,7 @@ import com.equipo.wikiastrolabio.ui.feature.inicio.SeccionCodex
 import com.equipo.wikiastrolabio.ui.feature.mecanicas.MecanicasRoute
 import com.equipo.wikiastrolabio.ui.feature.personajes.PersonajeDetalleRoute
 import com.equipo.wikiastrolabio.ui.feature.personajes.PersonajesRoute
+import com.equipo.wikiastrolabio.ui.feature.resenas.ResenasRoute
 
 /**
  * Mapa completo de la navegación. Cada pestaña de la barra inferior es un grafo anidado
@@ -46,6 +47,7 @@ fun AstrolabioNavHost(
                             SeccionCodex.PERSONAJES -> navController.navigate(Ruta.Personajes)
                             SeccionCodex.MECANICAS -> navController.navigate(Ruta.Mecanicas)
                             SeccionCodex.ARCHIVOS -> navController.navegarAPestana(DestinoPrincipal.ARCHIVOS)
+                            SeccionCodex.RESENAS -> navController.navigate(Ruta.Resenas)
                         }
                     },
                 )
@@ -55,6 +57,7 @@ fun AstrolabioNavHost(
             }
             composable<Ruta.PersonajeDetalle> { PersonajeDetalleRoute(onAtras = onAtras) }
             composable<Ruta.Mecanicas> { MecanicasRoute(onAtras = onAtras) }
+            composable<Ruta.Resenas> { ResenasRoute(onAtras = onAtras) }
         }
 
         navigation<Ruta.PestanaHistoria>(startDestination = Ruta.Historia) {

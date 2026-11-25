@@ -5,11 +5,13 @@ import com.equipo.wikiastrolabio.data.repository.ContenidoRepositoryImpl
 import com.equipo.wikiastrolabio.data.repository.HistoriaRepositoryImpl
 import com.equipo.wikiastrolabio.data.repository.MecanicasRepositoryImpl
 import com.equipo.wikiastrolabio.data.repository.PersonajesRepositoryImpl
+import com.equipo.wikiastrolabio.data.repository.ResenasRepositoryImpl
 import com.equipo.wikiastrolabio.domain.repository.ArchivosRepository
 import com.equipo.wikiastrolabio.domain.repository.ContenidoRepository
 import com.equipo.wikiastrolabio.domain.repository.HistoriaRepository
 import com.equipo.wikiastrolabio.domain.repository.MecanicasRepository
 import com.equipo.wikiastrolabio.domain.repository.PersonajesRepository
+import com.equipo.wikiastrolabio.domain.repository.ResenasRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -40,4 +42,8 @@ abstract class RepositoriosModule {
     @Binds
     @Singleton
     abstract fun bindArchivosRepository(impl: ArchivosRepositoryImpl): ArchivosRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindResenasRepository(impl: ResenasRepositoryImpl): ResenasRepository
 }

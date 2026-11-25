@@ -41,6 +41,8 @@
     <string name="codex_mecanicas_desc">Las habilidades de Almanaque XII.</string>
     <string name="codex_archivos">Archivos</string>
     <string name="codex_archivos_desc">Poemas y notas que quedaron en la torre.</string>
+    <string name="codex_resenas">Reseñas</string>
+    <string name="codex_resenas_desc">Lo que opinan los jugadores. Deja la tuya.</string>
 
     <!-- Historia -->
     <string name="historia_titulo">Historia</string>
@@ -112,4 +114,36 @@
     <string name="archivo_ubicacion">Dónde encontrarlo</string>
     <string name="categoria_poema">Poema</string>
     <string name="categoria_nota_xi">Nota de XI</string>
+
+    <!-- Reseñas -->
+    <string name="resenas_titulo">Reseñas</string>
+    <string name="resenas_antetitulo">Bitácora de viajeros</string>
+    <string name="resenas_subtitulo">Lo que opinan quienes han subido por el Gran Reloj.</string>
+    <string name="resenas_sin_resenas">Aún no hay reseñas</string>
+    <string name="resenas_se_el_primero">Sé la primera persona en contar qué te pareció el juego.</string>
+    <string name="resenas_promedio_descripcion">Calificación promedio: %1$s de 5</string>
+    <plurals name="resenas_total">
+        <item quantity="one">%d reseña</item>
+        <item quantity="many">%d reseñas</item>
+        <item quantity="other">%d reseñas</item>
+    </plurals>
+    <plurals name="resenas_estrellas">
+        <item quantity="one">%d estrella</item>
+        <item quantity="many">%d estrellas</item>
+        <item quantity="other">%d estrellas</item>
+    </plurals>
+    <string name="resenas_escribe">Escribe la tuya</string>
+    <string name="resenas_calificacion">Tu calificación</string>
+    <string name="resenas_apodo">Apodo</string>
+    <string name="resenas_texto">Tu reseña</string>
+    <string name="resenas_texto_ayuda">¿Qué te pareció el juego?</string>
+    <string name="resenas_minimo">Mínimo %1$d caracteres</string>
+    <string name="resenas_aviso_publico">Tu reseña será pública con tu apodo. No incluyas datos personales ni enlaces.</string>
+    <string name="resenas_publicar">Publicar reseña</string>
+    <string name="resenas_publicando">Publicando…</string>
+    <string name="resenas_publicada">¡Gracias! Tu reseña ya está en la bitácora.</string>
+    <string name="resenas_error_sin_conexion">Sin conexión. Revisa tu internet e intenta de nuevo.</string>
+    <string name="resenas_error_envio">No se pudo enviar. Intenta de nuevo en unos minutos.</string>
+    <string name="resenas_opiniones">Opiniones recientes</string>
+    <string name="resenas_vacio">Todavía no hay opiniones que mostrar.</string>
 </resources>
